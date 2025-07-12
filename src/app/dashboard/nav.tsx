@@ -9,9 +9,8 @@ import {
 import Link from "next/link";
 
 export default function Nav() {
-
     return (
-        <nav className="flex py-5 items-center font-mono justify-between bg-red-300">
+        <nav className="flex py-5 items-center font-mono justify-between border-b border-gray-200">
             <Link className="block text-3xl font-extrabold text-center" href="/">
                 {/*{settings?.publicationName || 'IndiePubStack_'}*/}
                 {'IndiePubStack'}
@@ -24,7 +23,7 @@ export default function Nav() {
 
 export function NavigationMenuDemo() {
     return (
-        <div className={'flex items-center justify-center mt-5'}>
+        <div className={'flex items-center justify-center'}>
             <NavigationMenu viewport={false} >
                 <NavigationMenuList>
                     <NavigationMenuItem>

@@ -7,6 +7,7 @@ import MarkdownIt from "markdown-it";
 import {formatDate} from "@/lib/utils";
 import {db, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
+import {Footer} from "@/app/footer";
 
 const md = MarkdownIt();
 
@@ -41,6 +42,7 @@ export default async function Page({
     const [post] = await db.select().from(postsTable).where(eq(postsTable.id, parseInt(postId)));
 
     return (<div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
+            <Nav></Nav>
             <div className={'flex-grow'}>
                 <div className={"max-w-xl mx-4 mt-4 container md:mx-auto flex-grow "}>
 
@@ -98,7 +100,7 @@ export default async function Page({
                     </div>
                 </div>
             </div>
-            {/*<Footer/>*/}
+            <Footer/>
         </div>
     )
 }
