@@ -1,7 +1,8 @@
+"use client"
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useRouter} from "next/router";
 import {Post} from "@/app/dashboard/types";
 import {Button} from "@/components/ui/button";
+import {useRouter} from "next/navigation";
 
 export default function NewPostButton() {
     const router = useRouter();

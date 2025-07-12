@@ -11,10 +11,10 @@ import Link from "next/link";
 export default function Nav() {
 
     return (
-        <nav className=" justify-between container py-5 items-center border border-black px-5 rounded font-mono">
+        <nav className="flex py-5 items-center font-mono justify-between bg-red-300">
             <Link className="block text-3xl font-extrabold text-center" href="/">
                 {/*{settings?.publicationName || 'IndiePubStack_'}*/}
-                {'IndiePubStack_'}
+                {'IndiePubStack'}
             </Link>
             <NavigationMenuDemo/>
         </nav>
