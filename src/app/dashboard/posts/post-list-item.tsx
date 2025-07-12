@@ -11,17 +11,17 @@ import {formatDate} from "@/lib/utils";
 export function PostDashboardListItem({post}: {post: Post}) {
     return (
         <div
-            className="rounded-md border border-gray-300 p-4 shadow-sm sm:p-6 mb-4 flex justify-between items-center"
+            className="rounded-md border border-gray-300 p-4 sm:p-6 mb-4 flex justify-between items-center"
         >
             <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="mt-4 sm:mt-0">
                     {post.status == 'draft' ?
                         <Link className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
-                              href={`/dashboard/post/${post.id}`}>
+                              href={`/dashboard/posts/${post.id}`}>
                             {post.title || 'Untitled'}
                         </Link>
                         :<a className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
-                            href={post.slug ? `/posts/${post.id}/${post.slug}` : `/posts/${post.id}`}>
+                            href={`/posts/${post.id}/${post.slug}`}>
                             {post.title || 'Untitled'}
                         </a>
                     }

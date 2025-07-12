@@ -1,0 +1,47 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://indie_pub_stack:indie_pub_stack@db:5432/indie_pub_stack_db
+      - KINDE_CLIENT_ID=${KINDE_CLIENT_ID}
+      - KINDE_CLIENT_SECRET=${KINDE_CLIENT_SECRET}
+      - KINDE_ISSUER_URL=${KINDE_ISSUER_URL}
+      - KINDE_SITE_URL=${KINDE_SITE_URL}
+      - KINDE_POST_LOGOUT_REDIRECT_URL=${KINDE_POST_LOGOUT_REDIRECT_URL}
+      - KINDE_POST_LOGIN_REDIRECT_URL=${KINDE_POST_LOGIN_REDIRECT_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - RESEND_AUDIENCE_ID=${RESEND_AUDIENCE_ID}
+      - RESEND_WEBHOOK_SECRET=${RESEND_WEBHOOK_SECRET}
+      - RESEND_DOMAIN=${RESEND_DOMAIN}
+      - DOMAIN=${DOMAIN}
+      - PUBLICATION_NAME=${PUBLICATION_NAME}
+      - CODE_THEME=${CODE_THEME}
+
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=indie_pub_stack
+      - POSTGRES_PASSWORD=indie_pub_stack
+      - POSTGRES_DB=indie_pub_stack_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

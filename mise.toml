@@ -1,0 +1,17 @@
+[tools]
+node = '24'
+
+[tasks."docker:start:all"]
+description = "Build & Start Docker Containers (App, Postgres)"
+run = "docker compose -f docker-compose.yml up --build"
+
+[tasks."docker:logs"]
+run = "docker compose -f docker-compose.yml logs -f"
+
+[tasks."docker:start:db"]
+description = "Start Database With Docker"
+run = "docker compose -f docker-compose.yml up db"
+
+[tasks."database:connect"]
+description = "Connect to PostgreSQL database (indie_pub_stack) using interactive psql client"
+run = "docker exec -it $(docker compose -f docker-compose.yml ps -q db) psql -U indie_pub_stack -d indie_pub_stack_db"

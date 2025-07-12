@@ -1,9 +1,17 @@
+export const dynamic = 'force-dynamic';
+
 import React from "react";
 import Nav from "@/app/nav";
-import {db, Post, postsTable, settingsTable} from "@/lib/drizzle";
+import {Post, postsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {eq} from "drizzle-orm";
 import {formatDate} from "@/lib/utils";
+import {Metadata} from "next";
+import {getSettings} from "@/lib/settings";
 
+export const metadata: Metadata = {
+    title: `${getSettings().publicationName} | Home`,
+}
 
 function PostListItem({post}: {post: Post}) {
     return (
@@ -32,19 +40,16 @@ function PostListItem({post}: {post: Post}) {
             </div>
         </a>
     );
-};
+}
 
 export default async function Home() {
-
-    // const [settings] = await db.select().from(settingsTable).limit(1);
-    const posts = await db.select()
+    const posts = await getDb().select()
         .from(postsTable).where(eq(postsTable.status, "published"));
 
   return (
       <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
         <Nav></Nav>
           <div className={'flex-grow'}>
-              {/*<div>{JSON.stringify(posts)}</div>*/}
 
               <section className={"pt-5 flex-grow max-w-4xl mx-auto"}>
                   {posts.map((post) => {
@@ -52,7 +57,6 @@ export default async function Home() {
                   })}
               </section>
           </div>
-          {/*<Footer/>*/}
       </div>
   );
 }

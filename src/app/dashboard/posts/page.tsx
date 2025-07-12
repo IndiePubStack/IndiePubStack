@@ -1,8 +1,8 @@
 "use client"
-import NewPostButton from "./new-post-button"
 import {Post} from "@/app/dashboard/types";
 import {PostDashboardListItem} from "@/app/dashboard/posts/post-list-item";
 import {useQuery} from "@tanstack/react-query";
+import {NewPostButton} from "@/app/dashboard/posts/new-post-button";
 
 
 export default function Page() {
