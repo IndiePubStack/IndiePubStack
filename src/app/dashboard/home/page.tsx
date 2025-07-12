@@ -23,7 +23,7 @@ export default function Page() {
         </div>
 
         {homeStats && <div
-            className={'rounded border border-gray-500 grid md:grid-cols-2 font-mono mt-10 divide-x-0 md:divide-x divide-y md:divide-y-0 divide-gray-500'}>
+            className={'rounded border border-gray-300 grid md:grid-cols-2 font-mono mt-10 divide-x-0 md:divide-x divide-y md:divide-y-0 divide-gray-300'}>
             <div className={'p-2.5'}>
                 <h1 className={'mb-2.5'}>Published posts</h1>
                 <p className={'font-bold text-xl'}>{homeStats.totalPosts}</p>

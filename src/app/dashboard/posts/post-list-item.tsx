@@ -11,7 +11,7 @@ import {formatDate} from "@/lib/utils";
 export function PostDashboardListItem({post}: {post: Post}) {
     return (
         <div
-            className="rounded-md border border-gray-300 p-4 shadow-sm sm:p-6 mb-4 flex justify-between items-center"
+            className="rounded-md border border-gray-300 p-4 sm:p-6 mb-4 flex justify-between items-center"
         >
             <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="mt-4 sm:mt-0">

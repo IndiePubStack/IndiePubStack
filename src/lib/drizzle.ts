@@ -38,9 +38,9 @@ export const postsTable = pgTable("posts", {
 // TODO: add tables for kinde users, resend contacts
 export const subscribersTable = pgTable("subscribers", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    kinde_id: varchar({ length: 255 }).notNull(),
+    kindeId: varchar({ length: 255 }).notNull(),
     email: varchar({ length: 255 }).notNull().unique(),
-    resend_contact_id: varchar({ length: 255 }),
+    resendContactId: varchar({ length: 255 }),
     createdAt: timestamp().defaultNow().notNull(),
 });
 

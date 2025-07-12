@@ -9,37 +9,23 @@ import {
 } from "@/components/ui/table"
 import {useQuery} from "@tanstack/react-query";
 import {AddSubscriberDialog} from "@/app/dashboard/subscribers/add-subscriber-dialog";
-// import type {Subscriber} from "@/types.ts";
-
-// export default function SubscribersPage() {
-//     // const { getAccessToken } = useKindeAuth();
-//     const subscribersQuery = useQuery({
-//         queryKey: ['subscribers'],
-//         queryFn: async (): Promise<Subscriber[]> => {
-//             return await fetch('/api/subscribers', {
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                 },
-//             )
-//                 .then((res) =>
-//                     res.json(),
-//                 )
-//         },
-//     })
-//     return (
-//         <div className={"antialiased max-w-4xl mx-auto px-4 h-full flex flex-col"}>
-//
-//             <Footer/>
-//         </div>
-//     )
-// }
-//
-
+import {Subscriber} from "@/app/dashboard/types";
 
 export default function Page() {
-
-    const subscribersQuery = {data: [{id: '1', email: "asdf", createdAt: 'asdfa'}]}
+    const subscribersQuery = useQuery({
+        queryKey: ['subscribers'],
+        queryFn: async (): Promise<Subscriber[]> => {
+            return await fetch('/api/subscribers', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                },
+            )
+                .then((res) =>
+                    res.json(),
+                )
+        },
+    })
 
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
