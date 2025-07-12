@@ -1,11 +1,20 @@
-import NewPostButton from "@/app/dashboard/posts/new-post-button";
+"use client"
+import {NewPostButton} from "@/app/dashboard/posts/new-post-button";
 import {PostDashboardListItem} from "@/app/dashboard/posts/post-list-item";
 import {Post} from "@/app/dashboard/types";
+import {useQuery} from "@tanstack/react-query";
 
 export default function Page() {
 
-    const homeStats = {totalPosts: 10, totalSubscribers: 10, recentDraftPosts: [], recentPublishedPosts: []}
-
+    const { data: homeStats } = useQuery({
+        queryKey: ['homeStats', 'posts', 'subscribers'],
+        queryFn: async () => {
+            return await fetch(`/api/home`)
+                .then((res) =>
+                    res.json(),
+                )
+        },
+    });
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
             <h1 className={"text-2xl font-bold"}>Home</h1>

@@ -4,7 +4,7 @@ import {Post} from "@/app/dashboard/types";
 import {Button} from "@/components/ui/button";
 import {useRouter} from "next/navigation";
 
-export default function NewPostButton() {
+export function NewPostButton() {
     const router = useRouter();
     const queryClient = useQueryClient();
     const createPostMutation = useMutation({
@@ -30,7 +30,7 @@ export default function NewPostButton() {
         },
         onSuccess: async (post: Post) => {
             await queryClient.invalidateQueries({queryKey: ['posts']});
-            await router.push(`/dashboard/post/${post.id}`);
+            router.push(`/dashboard/posts/${post.id}`);
         },
     });
 

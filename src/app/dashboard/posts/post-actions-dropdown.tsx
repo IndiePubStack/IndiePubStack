@@ -97,7 +97,7 @@ export default function PostActionsDropdown({post} : {post: Post}) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="start">
 
-                    <Link href={`/dashboard/post/${post.id}`}><DropdownMenuItem>
+                    <Link href={`/dashboard/posts/${post.id}`}><DropdownMenuItem>
                         Edit
                     </DropdownMenuItem></Link>
 

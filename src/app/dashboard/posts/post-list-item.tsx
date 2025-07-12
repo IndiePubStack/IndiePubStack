@@ -17,7 +17,7 @@ export function PostDashboardListItem({post}: {post: Post}) {
                 <div className="mt-4 sm:mt-0">
                     {post.status == 'draft' ?
                         <Link className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
-                              href={`/dashboard/post/${post.id}`}>
+                              href={`/dashboard/posts/${post.id}`}>
                             {post.title || 'Untitled'}
                         </Link>
                         :<a className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
