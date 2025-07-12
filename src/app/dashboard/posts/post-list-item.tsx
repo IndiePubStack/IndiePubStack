@@ -6,6 +6,7 @@ import {PublishDialog} from "@/app/dashboard/posts/publish-dialog";
 import {PreviewPostLinkIcon} from "@/app/dashboard/posts/preview-post-link";
 import PostActionsDropdown from "@/app/dashboard/posts/post-actions-dropdown";
 import PostStatus from "@/app/dashboard/posts/post-status";
+import {formatDate} from "@/lib/utils";
 
 export function PostDashboardListItem({post}: {post: Post}) {
     return (
@@ -35,7 +36,7 @@ export function PostDashboardListItem({post}: {post: Post}) {
                         <Badge variant="outline"
                                className=" font-mono text-gray-500"
                         >
-                            {/*{format(new Date(post.createdAt!), "d MMM, yyyy")}*/}
+                            {formatDate(new Date(post.createdAt!))}
                         </Badge>
                     </div>
 

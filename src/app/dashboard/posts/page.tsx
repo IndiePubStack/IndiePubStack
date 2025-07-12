@@ -2,11 +2,27 @@
 import NewPostButton from "./new-post-button"
 import {Post} from "@/app/dashboard/types";
 import {PostDashboardListItem} from "@/app/dashboard/posts/post-list-item";
+import {useQuery} from "@tanstack/react-query";
 
 
 export default function Page() {
 
-    const postsQuery = {data: []}
+    const {isPending, data: posts} = useQuery({
+        queryKey: ['posts'],
+        queryFn: async () => {
+            return await fetch('/api/posts', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                },
+            )
+                .then((res) =>
+                    res.json(),
+                )
+        },
+    })
+
+    if (isPending) return;
 
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
@@ -17,7 +33,7 @@ export default function Page() {
 
         <section className={"pt-10"}></section>
 
-        {postsQuery.data && postsQuery.data.map((post: Post) => (
+        {posts.map((post: Post) => (
             <PostDashboardListItem
                 key={post.id}
                 post={post}/>

@@ -64,21 +64,16 @@ export default function PostActionsDropdown({post} : {post: Post}) {
 
     const deletePostMutation = useMutation({
         mutationFn: async () => {
-            return await fetch(`/api/posts/${post.id}/delete`, {
+            return await fetch(`/api/posts/${post.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            }).then(res => {
-                if (!res.ok) {
-                    throw new Error('Failed to delete post');
-                }
-                return res.json();
-            });
+            })
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ['posts']});
-        },
+        }
     });
 
     const handleDelete = () => {
