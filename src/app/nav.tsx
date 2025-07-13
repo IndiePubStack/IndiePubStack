@@ -9,20 +9,19 @@ import {
 import Link from "next/link";
 
 import {getKindeServerSession, LoginLink, LogoutLink, RegisterLink} from "@kinde-oss/kinde-auth-nextjs/server";
+import {getSettings} from "@/lib/settings";
 
 
 export default async function Nav() {
-
-
     const {isAuthenticated} = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
-
+    const settings = getSettings();
 
     return (
         <nav className="flex justify-between py-5 items-center font-mono border-b border-gray-200">
             <Link className="block text-3xl font-extrabold text-center" href="/">
                 {/*{settings?.publicationName || 'IndiePubStack_'}*/}
-                {'IndiePubStack'}
+                {settings.publicationName}
             </Link>
 
             <div className={'flex items-center gap-2.5'}>

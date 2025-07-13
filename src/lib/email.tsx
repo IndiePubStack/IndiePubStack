@@ -16,6 +16,7 @@ import {
 import type { TailwindConfig } from "@react-email/tailwind";
 import type {Resend} from "resend";
 import {Post} from "@/lib/drizzle";
+import {getSettings} from "@/lib/settings";
 
 const tailwindConfig: TailwindConfig = {
     theme: {
@@ -75,12 +76,12 @@ const tailwindConfig: TailwindConfig = {
 }
 
 export function broadcastEmail(resend: Resend, post: Post) {
+    const settings = getSettings();
     return resend.broadcasts.create({
         name: "/" + post.id + "/" + post.title!,
-        audienceId: process.env.RESEND_AUDIENCE_ID!,
+        audienceId: settings.resendAudienceId!,
         previewText: post.subTitle || post.title!,
-        // todo: fix
-        from: 'IndiePubStack <no-reply@blog.andreyfadeev.com>',
+        from: `${settings.publicationName} <no-reply@${settings.resendDomain}>`,
         subject: post.title!,
         react: <NewsletterEmailTemplate post={post} />
     });
