@@ -17,7 +17,7 @@ import {NextRequest} from "next/server";
 // );
 
 export default withAuth(
-    async function middleware(_: NextRequest) {
+    async function middleware(_request: NextRequest) {
     },
     {
         // Middleware still runs on all routes, but doesn't protect the blog route

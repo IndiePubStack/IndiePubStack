@@ -32,11 +32,7 @@ export default function Page() {
                 <h1 className={'mb-2.5'}>Subscribers</h1>
                 <p className={'font-bold text-xl'}>{homeStats.totalSubscribers}</p>
             </div>
-
-
         </div>}
-
-
 
         {homeStats && homeStats.recentDraftPosts && <>
             <h2 className={'mt-10 mb-2.5 font-bold font-mono'}>Recent drafts</h2>
@@ -54,7 +50,6 @@ export default function Page() {
                 <PostDashboardListItem
                     key={post.id}
                     post={post}/>
-
             ))}
         </>}
     </>)

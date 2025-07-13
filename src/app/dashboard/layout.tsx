@@ -1,7 +1,11 @@
 import Nav from "@/app/dashboard/nav";
 import Providers from "@/app/providers";
 import React from "react";
-// import {KindeProvider} from "@kinde-oss/kinde-auth-nextjs";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'IndiePubStack | Dashboard',
+}
 
 function Footer() {
     return (

@@ -1,9 +1,13 @@
 import React from "react";
 import Nav from "@/app/nav";
-import {db, Post, postsTable, settingsTable} from "@/lib/drizzle";
+import {db, Post, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
 import {formatDate} from "@/lib/utils";
+import {Metadata} from "next";
 
+export const metadata: Metadata = {
+    title: 'IndiePubStack | Home',
+}
 
 function PostListItem({post}: {post: Post}) {
     return (
@@ -44,7 +48,6 @@ export default async function Home() {
       <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
         <Nav></Nav>
           <div className={'flex-grow'}>
-              {/*<div>{JSON.stringify(posts)}</div>*/}
 
               <section className={"pt-5 flex-grow max-w-4xl mx-auto"}>
                   {posts.map((post) => {
