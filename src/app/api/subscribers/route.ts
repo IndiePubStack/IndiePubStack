@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         const [subscriber] = await db.insert(subscribersTable)
             .values({
                 email: body.email,
-                kindeId: c.var.currentUser?.id || 'anonymous',
+                kindeId: 'anonymous',
                 resendContactId: result.data.id,
             })
             .returning();
