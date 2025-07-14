@@ -12,15 +12,6 @@ import {InferSelectModel} from "drizzle-orm";
 
 export const postStatusEnum = pgEnum("postStatus", ["draft", "published", "unpublished", "scheduled"]);
 
-export const settingsTable = pgTable("settings", {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    // codeHighlightTheme: varchar({ length: 255 }).default("github").notNull(),
-    publicationName: varchar({ length: 255 }).default("IndiePubStack_").notNull(),
-    // subscribeCtaText: text().default("Subscribe to receive the latest updates").notNull(),
-    createdAt: timestamp().defaultNow().notNull(),
-    updatedAt: timestamp(),
-});
-
 export const postsTable = pgTable("posts", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     title: varchar({ length: 255 }),
@@ -35,7 +26,6 @@ export const postsTable = pgTable("posts", {
     publishedAt: timestamp(),
 });
 
-// TODO: add tables for kinde users, resend contacts
 export const subscribersTable = pgTable("subscribers", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     kindeId: varchar({ length: 255 }).notNull(),
