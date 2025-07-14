@@ -11,4 +11,8 @@ export function formatDate(date: Date) {
     month: 'short',
     year: 'numeric'
   })
-};
+}
+
+export function isAdmin(roles: { id: string, key: string, name: string}[]) {
+  return roles.some(role => role.key === 'admin');
+}

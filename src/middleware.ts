@@ -1,30 +1,23 @@
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-import {NextRequest} from "next/server";
-
-// export default withAuth(
-//     async function middleware(req) {
-//         console.log("look at me", req.kindeAuth);
-//     },
-//     {
-//         isReturnToCurrentPage: true,
-//         loginPage: "/login",
-//         publicPaths: ["/public", '/more'],
-//         isAuthorized: ({token}) => {
-//             // The user will be considered authorized if they have the permission 'eat:chips'
-//             return token.permissions.includes("eat:chips");
-//         }
-//     }
-// );
+import { isAdmin } from "./lib/utils";
+import {NextRequest, NextResponse} from "next/server";
 
 export default withAuth(
-    async function middleware(_: NextRequest) {
+    async function middleware(req: NextRequest) {
+        const path = req.nextUrl.pathname;
+        if (path.startsWith('/api/') || path.startsWith('/dashboard/')) {
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            if (!isAdmin(req.kindeAuth.token.roles)) {
+                return NextResponse.redirect(new URL('/', req.url));
+            }
+        }
     },
     {
-        // Middleware still runs on all routes, but doesn't protect the blog route
         publicPaths: ["/", "/posts/"],
     }
 );
-
 
 export const config = {
     matcher: [

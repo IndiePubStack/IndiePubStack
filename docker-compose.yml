@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://indie_pub_stack:indie_pub_stack@db:5432/indie_pub_stack_db
+      # Add other environment variables as needed
+      # Note: In production, you should use secrets or environment variables
+      # instead of hardcoding values here
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=indie_pub_stack
+      - POSTGRES_PASSWORD=indie_pub_stack
+      - POSTGRES_DB=indie_pub_stack_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

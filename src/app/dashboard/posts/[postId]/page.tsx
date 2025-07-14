@@ -3,22 +3,22 @@ import {Post} from "@/app/dashboard/types";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useCallback, useEffect, useRef, useState} from "react";
 import z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ArrowLeft, Loader2Icon} from "lucide-react";
-import { PreviewPostLink } from "../preview-post-link";
-import { PublishDialog } from "../publish-dialog";
 import {Form, FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
 import {AutosizeTextarea} from "@/components/ui/autoresize-textarea";
 import {useParams} from "next/navigation";
+import {PreviewPostLink} from "@/app/dashboard/posts/preview-post-link";
+import {PublishDialog} from "@/app/dashboard/posts/publish-dialog";
 
-function PostEditor({ post }: { post?: Post }) {
+function PostEditor({post}: { post?: Post }) {
     const queryClient = useQueryClient();
     const [isSaving, setIsSaving] = useState(false);
     const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const lastSavedValuesRef = useRef<any>(null);
+    const lastSavedValuesRef = useRef<PostFormValues | null>(null);
 
     useEffect(() => {
         return () => {
@@ -82,7 +82,7 @@ function PostEditor({ post }: { post?: Post }) {
             });
         },
         onSuccess: async (_, variables) => {
-            lastSavedValuesRef.current = { ...variables };
+            lastSavedValuesRef.current = {...variables};
             await queryClient.invalidateQueries({queryKey: ['posts']});
             await queryClient.invalidateQueries({queryKey: ['post', post?.id]});
         },
@@ -133,7 +133,7 @@ function PostEditor({ post }: { post?: Post }) {
                                 <Loader2Icon className="animate-spin mr-2"/>
                                 Saving changes...
                             </>
-                        ) : <> <span className={'inline-block w-2 h-2 bg-green-600 rounded-full'}/> Saved</> }
+                        ) : <> <span className={'inline-block w-2 h-2 bg-green-600 rounded-full'}/> Saved</>}
                     </Button>
                 </div>
 
@@ -144,11 +144,11 @@ function PostEditor({ post }: { post?: Post }) {
             </div>
 
             <Form {...form}>
-                <form className="mx-auto p-6 space-y-6 font-serif text-black">
+                <form className="mx-auto py-6 space-y-6 font-serif text-black">
                     <FormField
                         control={form.control}
                         name="title"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormControl>
                                     <input
@@ -157,7 +157,7 @@ function PostEditor({ post }: { post?: Post }) {
                                         className="w-full text-4xl font-bold  outline-none border-none focus:ring-0"
                                     />
                                 </FormControl>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
@@ -165,7 +165,7 @@ function PostEditor({ post }: { post?: Post }) {
                     <FormField
                         control={form.control}
                         name="subTitle"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormControl>
                                     <input
@@ -174,7 +174,7 @@ function PostEditor({ post }: { post?: Post }) {
                                         className="w-full text-xl  outline-none border-none focus:ring-0"
                                     />
                                 </FormControl>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
@@ -182,7 +182,7 @@ function PostEditor({ post }: { post?: Post }) {
                     <FormField
                         control={form.control}
                         name="content"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormControl>
                                     <AutosizeTextarea
@@ -191,7 +191,7 @@ function PostEditor({ post }: { post?: Post }) {
                                         placeholder="Start writing with markdown"
                                     />
                                 </FormControl>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
@@ -205,7 +205,7 @@ export default function Page() {
     const params = useParams<{ postId: string }>()
     const postId = parseInt(params.postId)
 
-    const { isPending, error, data: post } = useQuery({
+    const {isPending, error, data: post} = useQuery({
         queryKey: ['post', postId],
         queryFn: async () => {
             return await fetch(`/api/posts/${postId}`)

@@ -2,6 +2,7 @@ import {db, subscribersTable} from "@/lib/drizzle";
 import { desc} from "drizzle-orm";
 import z from "zod";
 import {resend} from "@/lib/resend";
+import {getSettings} from "@/lib/settings";
 
 export async function GET() {
     const subscribers = await db.select()
@@ -21,30 +22,24 @@ const  createSubscriberBodySchema = z.object({
 
 export async function POST(request: Request) {
     const bodyRaw = await request.json();
+    const settings = getSettings();
     try {
         const body = createSubscriberBodySchema.parse(bodyRaw);
 
         const result = await resend.contacts.create({
             email: body.email,
             unsubscribed: false,
-            audienceId: process.env.RESEND_AUDIENCE_ID!,
+            audienceId: settings.resendAudienceId!
         });
 
         if (!result.data?.id) {
-            return new Response(JSON.stringify({
-                message: 'Failed to create contact'
-                }
-
-            ), {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' }
-            })
+            return Response.json({ message: 'Failed to create contact'}, {status: 400})
         }
 
         const [subscriber] = await db.insert(subscribersTable)
             .values({
                 email: body.email,
-                kindeId: c.var.currentUser?.id || 'anonymous',
+                kindeId: 'anonymous',
                 resendContactId: result.data.id,
             })
             .returning();
