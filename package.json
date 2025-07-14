@@ -33,7 +33,6 @@
     "pg": "^8.16.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-helmet": "^6.1.0",
     "react-hook-form": "^7.60.0",
     "resend": "^4.6.0",
     "shiki": "^3.7.0",
