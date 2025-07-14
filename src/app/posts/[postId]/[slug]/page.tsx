@@ -23,11 +23,12 @@ md.use(
 );
 
 function SubscribeForm() {
-    return (<div className={'border border-gray-300 rounded mt-5 py-5 p-2.5 font-mono '}>
+    return (<div className={'border border-gray-300 rounded mt-5 py-5 p-2.5 font-mono transition duration-300 ease-in-out transform hover:scale-105'}>
         <p className={'text-center'}>Like what you’re reading? Don’t miss out — hit subscribe and stay in the loop!</p>
 
-        <div className="flex justify-center mt-2.5">
-            <Button asChild>
+        {/*transition duration-300 ease-in-out transform hover:scale-105*/}
+        <div className="flex justify-center mt-5">
+            <Button asChild size={'lg'}>
                 <Link href={'/subscribe'}>Subscribe</Link>
             </Button>
         </div>
@@ -46,7 +47,7 @@ export async function generateMetadata({
 }) {
     const post = await getPostById(params.postId)
     return {
-        title: `IndiePubStack | ${post.title}`,
+        title: `${post.title} | ${getSettings().publicationName}`,
         description: post.subTitle || post.content?.slice(0, 200) || ''
     }
 }

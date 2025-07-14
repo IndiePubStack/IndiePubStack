@@ -4,9 +4,10 @@ import {db, Post, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
 import {formatDate} from "@/lib/utils";
 import {Metadata} from "next";
+import {getSettings} from "@/lib/settings";
 
 export const metadata: Metadata = {
-    title: 'IndiePubStack | Home',
+    title: `${getSettings().publicationName} | Home`,
 }
 
 function PostListItem({post}: {post: Post}) {
