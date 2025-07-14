@@ -19,6 +19,7 @@ export default function Page() {
     const publicationName = settings?.publicationName || '';
     const resendDomain = settings?.resendDomain || '';
     const resendAudienceId = settings?.resendAudienceId || '';
+    const codeTheme = settings?.codeTheme || '';
 
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
@@ -42,7 +43,19 @@ export default function Page() {
                     className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                    This property is managed via the <Badge variant={'secondary'}>PUBLICATION_NAME</Badge> environment variable on the server side.
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>PUBLICATION_NAME</Badge> environment variable on the server side.
+                </p>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className={'font-mono'}>Code Theme</Label>
+                <Input
+                    value={codeTheme}
+                    disabled={true}
+                    className="bg-muted"
+                />
+                <p className="text-sm text-muted-foreground">
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>CODE_THEME</Badge> environment variable on the server side.
                 </p>
             </div>
 
@@ -54,7 +67,7 @@ export default function Page() {
                     className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                    This property is managed via the <Badge variant={'secondary'}>DOMAIN</Badge> environment variable on the server side.
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>DOMAIN</Badge> environment variable on the server side.
                 </p>
             </div>
 
@@ -66,7 +79,7 @@ export default function Page() {
                     className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                    This property is managed via the <Badge variant={'secondary'}>RESEND_DOMAIN</Badge> environment variable on the server side.
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>RESEND_DOMAIN</Badge> environment variable on the server side.
                 </p>
             </div>
 
@@ -78,12 +91,9 @@ export default function Page() {
                     className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                    This property is managed via the <Badge variant={'secondary'}>RESEND_AUDIENCE_ID</Badge> environment variable on the server side.
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>RESEND_AUDIENCE_ID</Badge> environment variable on the server side.
                 </p>
             </div>
-
-
-
         </div>
     </>)
 }

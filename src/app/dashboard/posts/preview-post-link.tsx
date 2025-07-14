@@ -9,7 +9,7 @@ export function PreviewPostLink({post}: {post: Post}) {
         <Tooltip>
             <TooltipTrigger asChild>
                 <Button variant="secondary" className={'font-mono'} asChild>
-                    <a href={`/posts/${post.id}`} target="_blank">
+                    <a href={`/posts/${post.id}/${post.slug}`} target="_blank">
                         <span>Preview post</span>
                         <MoveUpRight/>
                     </a>
@@ -27,7 +27,7 @@ export function PreviewPostLinkIcon({post}: {post: Post}) {
         <Tooltip>
             <TooltipTrigger asChild>
                 <Button variant="secondary" size={'icon'} asChild>
-                    <a href={`/posts/${post.id}`}><MoveUpRight/></a>
+                    <a href={`/posts/${post.id}/${post.slug}`}><MoveUpRight/></a>
                 </Button>
             </TooltipTrigger>
             <TooltipContent>

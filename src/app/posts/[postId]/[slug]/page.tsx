@@ -9,14 +9,15 @@ import {db, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
 import {Footer} from "@/app/footer";
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import {getSettings} from "@/lib/settings";
+
 
 const md = MarkdownIt();
 
 md.use(
     await Shiki({
         themes: {
-            light: "one-light",
-            dark: "solarized-dark",
+            light: getSettings().codeTheme || 'one-light'
         },
     }),
 );

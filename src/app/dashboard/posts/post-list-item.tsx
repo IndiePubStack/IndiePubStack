@@ -21,7 +21,7 @@ export function PostDashboardListItem({post}: {post: Post}) {
                             {post.title || 'Untitled'}
                         </Link>
                         :<a className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
-                            href={post.slug ? `/posts/${post.id}/${post.slug}` : `/posts/${post.id}`}>
+                            href={`/posts/${post.id}/${post.slug}`}>
                             {post.title || 'Untitled'}
                         </a>
                     }

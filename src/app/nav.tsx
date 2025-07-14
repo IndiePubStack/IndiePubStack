@@ -1,34 +1,30 @@
 import { Button } from "@/components/ui/button";
-import {
-    NavigationMenu,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
 import Link from "next/link";
 
 import {getKindeServerSession, LoginLink, LogoutLink, RegisterLink} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
+import {isAdmin} from "@/lib/utils";
 
 
 export default async function Nav() {
-    const {isAuthenticated} = getKindeServerSession();
+    const {isAuthenticated, getClaim} = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
+    const roles = await getClaim('roles');
+
     const settings = getSettings();
 
     return (
         <nav className="flex justify-between py-5 items-center font-mono border-b border-gray-200">
             <Link className="block text-3xl font-extrabold text-center" href="/">
-                {/*{settings?.publicationName || 'IndiePubStack_'}*/}
                 {settings.publicationName}
             </Link>
 
             <div className={'flex items-center gap-2.5'}>
                 {isUserAuthenticated ? <>
-                    <Button className={'cursor-pointer'} size={'lg'} asChild>
-                        <Link href="/dashboard/home">Dashboard</Link>
-                    </Button>
+
+                {isAdmin(roles.value) && <Button className={'cursor-pointer'} size={'lg'} asChild>
+                    <Link href="/dashboard/home">Dashboard</Link>
+                </Button>}
 
                     <Button className={'cursor-pointer'} variant={'secondary'} size={'lg'} asChild>
                         <LogoutLink>Log out</LogoutLink>
@@ -45,36 +41,3 @@ export default async function Nav() {
         </nav>
     );
 }
-
-
-export function NavigationMenuDemo() {
-    return (
-        <div className={'flex items-center justify-center mt-5'}>
-            <NavigationMenu viewport={false} >
-                <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <Link href="/dashboard/home">Home</Link>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <Link href="/dashboard/posts">Posts</Link>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <Link href="/dashboard/subscribers">Subscribers</Link>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <Link href="/dashboard/settings">Settings</Link>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu>
-        </div>
-    )
-}
-
