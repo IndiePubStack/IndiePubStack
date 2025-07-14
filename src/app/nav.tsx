@@ -5,7 +5,6 @@ import {getKindeServerSession, LoginLink, LogoutLink, RegisterLink} from "@kinde
 import {getSettings} from "@/lib/settings";
 import {isAdmin} from "@/lib/utils";
 
-
 export default async function Nav() {
     const {isAuthenticated, getClaim} = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
