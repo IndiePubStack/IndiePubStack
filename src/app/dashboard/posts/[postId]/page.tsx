@@ -144,7 +144,7 @@ function PostEditor({post}: { post?: Post }) {
             </div>
 
             <Form {...form}>
-                <form className="mx-auto p-6 space-y-6 font-serif text-black">
+                <form className="mx-auto py-6 space-y-6 font-serif text-black">
                     <FormField
                         control={form.control}
                         name="title"

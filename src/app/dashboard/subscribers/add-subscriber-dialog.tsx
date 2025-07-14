@@ -73,7 +73,7 @@ export function AddSubscriberDialog({ variant }: { variant?: 'default' | 'second
         }}>
             <DialogTrigger asChild>
                 <Button variant={variant}
-                        className={'cursor-pointer font-mono'}>Add Subscriber</Button>
+                        className={'cursor-pointer font-mono'}>Add subscriber</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -101,7 +101,7 @@ export function AddSubscriberDialog({ variant }: { variant?: 'default' | 'second
                             disabled={addSubscriberMutation.isPending}>
                         {addSubscriberMutation.isPending
                             ? "Processing..."
-                            : "Add Subscriber"}
+                            : "Add subscriber"}
                     </Button>
                 </DialogFooter>
             </DialogContent>
