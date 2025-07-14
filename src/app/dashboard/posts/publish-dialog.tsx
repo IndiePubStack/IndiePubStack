@@ -7,7 +7,6 @@ import {Post} from "@/app/dashboard/types";
 
 export function PublishDialog({ post, variant }: { post: Post, variant?: 'default' | 'secondary' | 'outline' }) {
     const queryClient = useQueryClient();
-    // const navigate = useNavigate();
     const [open, setOpen] = useState(false)
     const [schedule, setSchedule] = useState(false)
     const [scheduledAt, setScheduledAt] = useState<string | null>(null)
@@ -42,9 +41,9 @@ export function PublishDialog({ post, variant }: { post: Post, variant?: 'defaul
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['posts'] });
             await queryClient.invalidateQueries({ queryKey: ['post', post.id] });
+            await queryClient.invalidateQueries({ queryKey: ['homeStats'] });
             setOpen(false);
             resetDialogState();
-            // navigate('/dashboard/posts');
         },
         onError: (error) => {
             console.error('Error publishing/scheduling post:', error);

@@ -38,7 +38,7 @@ export const useAutosizeTextArea = ({
                 textAreaElement.style.height = `${scrollHeight + offsetBorder}px`;
             }
         }
-    }, [textAreaRef.current, triggerAutoSize]);
+    }, [textAreaRef, triggerAutoSize, init, maxHeight, minHeight]);
 };
 
 export type AutosizeTextAreaRef = {

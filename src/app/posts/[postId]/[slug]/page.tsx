@@ -2,31 +2,18 @@ import Nav from "@/app/nav";
 import React, {cache} from "react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import Shiki from "@shikijs/markdown-it";
-import MarkdownIt from "markdown-it";
 import {formatDate} from "@/lib/utils";
 import {db, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
 import {Footer} from "@/app/footer";
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
-
-
-const md = MarkdownIt();
-
-md.use(
-    await Shiki({
-        themes: {
-            light: getSettings().codeTheme || 'one-light'
-        },
-    }),
-);
+import {md} from "@/lib/markdown";
 
 function SubscribeForm() {
     return (<div className={'border border-gray-300 rounded mt-5 py-5 p-2.5 font-mono transition duration-300 ease-in-out transform hover:scale-105'}>
         <p className={'text-center'}>Like what you’re reading? Don’t miss out — hit subscribe and stay in the loop!</p>
 
-        {/*transition duration-300 ease-in-out transform hover:scale-105*/}
         <div className="flex justify-center mt-5">
             <Button asChild size={'lg'}>
                 <Link href={'/subscribe'}>Subscribe</Link>
@@ -43,7 +30,7 @@ const getPostById = cache(async (postId: string) => {
 export async function generateMetadata({
                                            params,
                                        }: {
-    params: { postId: string }
+    params: { postId: string, slug: string }
 }) {
     const post = await getPostById(params.postId)
     return {
@@ -55,13 +42,12 @@ export async function generateMetadata({
 export default async function Page({
                                  params,
                              }: {
-    params: Promise<{ postId: string, slug: string }>
+    params: { postId: string, slug: string }
 }) {
     const {isAuthenticated} = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
 
-    const {postId} = await params;
-    const post = await getPostById(postId)
+    const post = await getPostById(params.postId)
 
     return (<div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
             <Nav></Nav>
