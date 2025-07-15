@@ -27,18 +27,10 @@ export const postsTable = pgTable("posts", {
     publishedAt: timestamp(),
 });
 
-export const subscribersTable = pgTable("subscribers", {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    kindeId: varchar({ length: 255 }).notNull(),
-    email: varchar({ length: 255 }).notNull().unique(),
-    resendContactId: varchar({ length: 255 }),
-    createdAt: timestamp().defaultNow().notNull(),
-});
-
 export const kindeUsersTable = pgTable("kinde_users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     kindeId: varchar({ length: 255 }).notNull().unique(),
-    email: varchar({ length: 255 }).notNull().unique(),
+    email: varchar({ length: 255 }).notNull(),
     firstName: varchar({ length: 255 }),
     lastName: varchar({ length: 255 }),
     createdAt: timestamp().defaultNow().notNull(),

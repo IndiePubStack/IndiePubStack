@@ -1,9 +1,9 @@
-import {db, postsTable, subscribersTable} from "@/lib/drizzle";
+import {db, postsTable, resendContactsTable} from "@/lib/drizzle";
 import {count, desc, eq} from "drizzle-orm";
 
 export async function GET() {
     const [{total: totalSubscribers}] = await db.select({ total: count() })
-        .from(subscribersTable);
+        .from(resendContactsTable);
 
     const [{total: totalPosts}] = await db.select({ total: count() })
         .from(postsTable)

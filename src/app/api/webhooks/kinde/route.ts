@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import jwksClient from "jwks-rsa";
 import jwt from "jsonwebtoken";
 import { db, kindeUsersTable } from "@/lib/drizzle";
+import {createContact} from "@/lib/resend";
 
 const client = jwksClient({
     jwksUri: `${process.env.KINDE_ISSUER_URL}/.well-known/jwks.json`,
@@ -29,7 +30,6 @@ interface KindeEvent {
 }
 
 export async function POST(req: NextRequest) {
-    console.log("IN KINDE WEBHOOK", req)
     try {
         const token = await req.text();
 
@@ -49,6 +49,9 @@ export async function POST(req: NextRequest) {
             await upsertKindeUser(kindeId, email, firstName, lastName);
         }
 
+        if (event?.type === "user.created") {
+            await createContact(email,  firstName, lastName);
+        }
     } catch (err) {
         if (err instanceof Error) {
             console.error(err.message);
