@@ -14,4 +14,4 @@ run = "docker compose -f docker-compose.yml up db"
 
 [tasks."database:connect"]
 description = "Connect to PostgreSQL database (indie_pub_stack) using interactive psql client"
-run = "docker exec -it $(docker compose -f docker-compose.yml ps -q postgres) psql -U indie_pub_stack -d indie_pub_stack_db"
+run = "docker exec -it $(docker compose -f docker-compose.yml ps -q db) psql -U indie_pub_stack -d indie_pub_stack_db"

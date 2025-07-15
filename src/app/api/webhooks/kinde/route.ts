@@ -29,6 +29,7 @@ interface KindeEvent {
 }
 
 export async function POST(req: NextRequest) {
+    console.log("IN KINDE WEBHOOK", req)
     try {
         const token = await req.text();
 
