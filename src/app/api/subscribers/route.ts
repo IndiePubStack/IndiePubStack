@@ -1,7 +1,7 @@
 import {db, subscribersTable} from "@/lib/drizzle";
 import { desc} from "drizzle-orm";
 import z from "zod";
-import {resend} from "@/lib/resend";
+import {getResendClient} from "@/lib/resend";
 import {getSettings} from "@/lib/settings";
 
 export async function GET() {
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     try {
         const body = createSubscriberBodySchema.parse(bodyRaw);
 
-        const result = await resend.contacts.create({
+        const result = await getResendClient().contacts.create({
             email: body.email,
             unsubscribed: false,
             audienceId: settings.resendAudienceId!
