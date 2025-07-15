@@ -29,6 +29,32 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Database Setup
+
+This project uses Drizzle ORM with PostgreSQL. The database schema is defined in `src/lib/drizzle.ts`.
+
+### Generating Migrations
+
+After making changes to the database schema, you need to generate migrations:
+
+```bash
+# Generate migrations
+npx drizzle-kit generate
+
+# Apply migrations
+npx drizzle-kit push
+```
+
+### Kinde Users Table
+
+A new table `kinde_users` has been added to store user data from Kinde authentication service. This table stores:
+- User ID from Kinde
+- Email
+- First name
+- Last name
+
+The webhook implementation in `src/app/api/kinde-webhook/route.ts` handles user creation and updates from Kinde.
+
 ## Docker Setup
 
 This project includes Docker configuration for easy development and deployment.
