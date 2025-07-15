@@ -1,12 +1,12 @@
 import {db, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
-import {resend} from "@/lib/resend";
-import slugify from "@/lib/slugify";
+import {getResendClient} from "@/lib/resend";
 import {broadcastEmail} from "@/lib/email";
-
+import slugify from "slugify";
 
 export async function POST(_request: Request,
                           { params }: { params: Promise<{ postId: string }> }) {
+    const resend = getResendClient();
     const postId = parseInt((await params).postId);
 
     const [post] = await db.select().from(postsTable).where(eq(postsTable.id, postId));

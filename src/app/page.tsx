@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import React from "react";
 import Nav from "@/app/nav";
 import {db, Post, postsTable} from "@/lib/drizzle";
@@ -37,11 +39,9 @@ function PostListItem({post}: {post: Post}) {
             </div>
         </a>
     );
-};
+}
 
 export default async function Home() {
-
-    // const [settings] = await db.select().from(settingsTable).limit(1);
     const posts = await db.select()
         .from(postsTable).where(eq(postsTable.status, "published"));
 
@@ -56,7 +56,6 @@ export default async function Home() {
                   })}
               </section>
           </div>
-          {/*<Footer/>*/}
       </div>
   );
 }

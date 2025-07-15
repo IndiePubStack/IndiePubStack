@@ -26,6 +26,8 @@
     "clsx": "^2.1.1",
     "dotenv": "^17.2.0",
     "drizzle-orm": "^0.44.2",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.2.0",
     "lucide-react": "^0.525.0",
     "markdown-it": "^14.1.0",
     "md-to-react-email": "^5.0.5",
@@ -37,6 +39,7 @@
     "resend": "^4.6.0",
     "shiki": "^3.7.0",
     "slugify": "^1.6.6",
+    "svix": "^1.69.0",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.0.5"
   },

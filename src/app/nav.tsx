@@ -6,9 +6,9 @@ import {getSettings} from "@/lib/settings";
 import {isAdmin} from "@/lib/utils";
 
 export default async function Nav() {
-    const {isAuthenticated, getClaim} = getKindeServerSession();
+    const {isAuthenticated, getRoles} = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
-    const roles = await getClaim('roles');
+    const roles = await getRoles() || [];
 
     const settings = getSettings();
 
@@ -21,7 +21,7 @@ export default async function Nav() {
             <div className={'flex items-center gap-2.5'}>
                 {isUserAuthenticated ? <>
 
-                {isAdmin(roles.value) && <Button className={'cursor-pointer'} size={'lg'} asChild>
+                {isAdmin(roles) && <Button className={'cursor-pointer'} size={'lg'} asChild>
                     <Link href="/dashboard/home">Dashboard</Link>
                 </Button>}
 

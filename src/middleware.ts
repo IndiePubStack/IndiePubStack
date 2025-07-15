@@ -1,6 +1,7 @@
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 import { isAdmin } from "./lib/utils";
 import {NextRequest, NextResponse} from "next/server";
+import {KindeRoles} from "@kinde-oss/kinde-auth-nextjs/types";
 
 export default withAuth(
     async function middleware(req: NextRequest) {
@@ -9,7 +10,9 @@ export default withAuth(
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
-            if (!isAdmin(req.kindeAuth.token.roles)) {
+            const roles = req.kindeAuth.token.roles as KindeRoles
+
+            if (!isAdmin(roles)) {
                 return NextResponse.redirect(new URL('/', req.url));
             }
         }

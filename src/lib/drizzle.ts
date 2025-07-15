@@ -4,6 +4,7 @@ import {
     integer,
     pgTable,
     varchar,
+    boolean,
     text,
     timestamp, pgEnum,
 } from "drizzle-orm/pg-core";
@@ -34,6 +35,30 @@ export const subscribersTable = pgTable("subscribers", {
     createdAt: timestamp().defaultNow().notNull(),
 });
 
+export const kindeUsersTable = pgTable("kinde_users", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    kindeId: varchar({ length: 255 }).notNull().unique(),
+    email: varchar({ length: 255 }).notNull().unique(),
+    firstName: varchar({ length: 255 }),
+    lastName: varchar({ length: 255 }),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().notNull(),
+});
+
+export const resendContactsTable = pgTable("resend_contacts", {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    resendId: varchar({ length: 255 }).notNull().unique(),
+    audienceId: varchar({ length: 255 }).notNull(),
+    email: varchar({ length: 255 }).notNull().unique(),
+    firstName: varchar({ length: 255 }),
+    lastName: varchar({ length: 255 }),
+    unsubscribed: boolean().default(false).notNull(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().notNull(),
+});
+
 export type Post = InferSelectModel<typeof postsTable>;
+export type KindeUser = InferSelectModel<typeof kindeUsersTable>;
+export type ResendContact = InferSelectModel<typeof resendContactsTable>;
 
 export const db = drizzle(process.env.DATABASE_URL!);
