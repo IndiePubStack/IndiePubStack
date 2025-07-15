@@ -4,7 +4,7 @@ import {Webhook} from "svix";
 
 let webhook: Webhook | null = null;
 
-export function getWebhook() {
+function getWebhook() {
     if (!webhook) {
         if (!process.env.RESEND_WEBHOOK_SECRET) {
             throw new Error('RESEND_WEBHOOK_SECRET is not set');
