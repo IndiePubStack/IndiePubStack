@@ -103,9 +103,10 @@ function PostEditor({post}: { post?: Post }) {
     const watchedValues = form.watch();
     useEffect(() => {
         if (post?.id && form.formState.isDirty) {
-            if (lastSavedValuesRef.current) {
+            const lastValues = lastSavedValuesRef.current;
+            if (lastValues) {
                 const hasChanged = Object.keys(watchedValues).some(key =>
-                    watchedValues[key as keyof PostFormValues] !== lastSavedValuesRef.current[key]
+                    watchedValues[key as keyof PostFormValues] !== lastValues[key as keyof PostFormValues]
                 );
 
                 if (hasChanged) {

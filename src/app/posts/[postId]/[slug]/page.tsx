@@ -27,27 +27,27 @@ const getPostById = cache(async (postId: string) => {
     return post;
 })
 
-export async function generateMetadata({
-                                           params,
-                                       }: {
-    params: { postId: string, slug: string }
+
+
+export async function generateMetadata({params}: {
+    params: Promise<{ postId: string; slug: string }>;
 }) {
-    const post = await getPostById(params.postId)
+    const {postId} = await params;
+    const post = await getPostById(postId)
     return {
         title: `${post.title} | ${getSettings().publicationName}`,
         description: post.subTitle || post.content?.slice(0, 200) || ''
     }
 }
 
-export default async function Page({
-                                 params,
-                             }: {
-    params: { postId: string, slug: string }
+export default async function Page({params}: {
+    params: Promise<{ postId: string; slug: string }>;
 }) {
     const {isAuthenticated} = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
 
-    const post = await getPostById(params.postId)
+    const {postId} = await params;
+    const post = await getPostById(postId)
 
     return (<div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
             <Nav></Nav>

@@ -1,9 +1,8 @@
 import {db, postsTable} from "@/lib/drizzle";
 import {eq} from "drizzle-orm";
 import {resend} from "@/lib/resend";
-import slugify from "@/lib/slugify";
 import {broadcastEmail} from "@/lib/email";
-
+import slugify from "slugify";
 
 export async function POST(_request: Request,
                           { params }: { params: Promise<{ postId: string }> }) {
