@@ -39,8 +39,9 @@ export async function POST(request: Request) {
                 resendId: result.data.id,
                 audienceId: settings.resendAudienceId!,
                 createdAt: new Date()
-            })
+            }).onConflictDoUpdate({target: resendContactsTable.resendId, set: {resendId: result.data.id}})
             .returning();
+
 
         return new Response(JSON.stringify(subscriber), {
             status: 201,
@@ -53,5 +54,6 @@ export async function POST(request: Request) {
                 headers: { 'Content-Type': 'application/json' }
             });
         }
+        console.error(e);
     }
 }
