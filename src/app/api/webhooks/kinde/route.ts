@@ -1,12 +1,24 @@
 import {NextRequest, NextResponse} from "next/server";
-import jwksClient from "jwks-rsa";
+import jwksClient, {JwksClient} from "jwks-rsa";
 import jwt from "jsonwebtoken";
 import { db, kindeUsersTable } from "@/lib/drizzle";
 import {createContact} from "@/lib/resend";
 
-const client = jwksClient({
-    jwksUri: `${process.env.KINDE_ISSUER_URL}/.well-known/jwks.json`,
-});
+
+let client: JwksClient | null = null;
+
+function getJwksClient() {
+    if (!client) {
+        if (!process.env.KINDE_ISSUER_URL) {
+            throw new Error('KINDE_ISSUER_URL is not set');
+        }
+
+        client = jwksClient({
+            jwksUri: `${process.env.KINDE_ISSUER_URL}/.well-known/jwks.json`,
+        });
+    }
+    return client;
+}
 
 interface KindeUser {
     id: string;
@@ -36,7 +48,7 @@ export async function POST(req: NextRequest) {
         const decoded = jwt.decode(token, { complete: true });
         const { kid } = decoded?.header || {};
 
-        const key = await client.getSigningKey(kid);
+        const key = await getJwksClient().getSigningKey(kid);
         const event = jwt.verify(token, key.getPublicKey()) as KindeEvent;
 
         if (!event?.data?.user) {
