@@ -4,6 +4,7 @@ import {
     integer,
     pgTable,
     varchar,
+    boolean,
     text,
     timestamp, pgEnum,
 } from "drizzle-orm/pg-core";
