@@ -82,6 +82,33 @@ Coming soon:
 
 ---
 
+## ⚙️ Environment Variables
+
+IndiePubStack uses the following environment variables for configuration:
+
+### Database Configuration
+- `DATABASE_URL`: PostgreSQL connection string for the application database
+
+### Kinde Authentication
+- `KINDE_CLIENT_ID`: Your Kinde application client ID
+- `KINDE_CLIENT_SECRET`: Your Kinde application client secret
+- `KINDE_ISSUER_URL`: The issuer URL for your Kinde application
+- `KINDE_SITE_URL`: The URL of your IndiePubStack site
+- `KINDE_POST_LOGOUT_REDIRECT_URL`: URL to redirect to after logout
+- `KINDE_POST_LOGIN_REDIRECT_URL`: URL to redirect to after login
+
+### Resend Email Service
+- `RESEND_API_KEY`: Your Resend API key for email delivery
+- `RESEND_AUDIENCE_ID`: Audience ID for your Resend account
+- `RESEND_DOMAIN`: Domain configured in Resend for sending emails
+
+### Site Configuration
+- `DOMAIN`: Your custom domain for the IndiePubStack site
+- `PUBLICATION_NAME`: Name of your publication
+- `CODE_THEME`: Theme for code blocks in your content
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! If you'd like to add features, improve docs, or fix bugs, feel free to open an issue or submit a PR.
