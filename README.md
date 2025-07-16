@@ -2,6 +2,7 @@
 
 **IndiePubStack** is an open-source, self-hosted publishing platform tailored for **technical creators**. Whether you're a developer looking to blog, send newsletters, or build a paid subscriber base — IndiePubStack gives you the tools to **own your audience** without relying on proprietary platforms.
 
+
 ![Dashboard Demo](img/dashboard_demo.png)
 
 ## ✨ Features
