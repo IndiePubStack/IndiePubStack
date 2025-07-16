@@ -1,94 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IndiePubStack
 
-## Getting Started
+**IndiePubStack** is an open-source, self-hosted publishing platform tailored for **technical creators**. Whether you're a developer looking to blog, send newsletters, or build a paid subscriber base — IndiePubStack gives you the tools to **own your audience** without relying on proprietary platforms.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- ✍️ Developer-first blogging experience
+- 📬 Built-in newsletter delivery
+- 💸 Subscription monetization support (coming soon)
+- 🔒 Secure authentication via [Kinde](https://kinde.com)
+- 📧 Email delivery via [Resend](https://resend.com)
+- 🧱 Easily self-host with Docker on any VPS
+- 🌐 Full support for custom domains
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎯 Why IndiePubStack?
 
-## Learn More
+Most blogging and newsletter platforms lock you into their ecosystem or charge steep fees. **IndiePubStack** lets you:
 
-To learn more about Next.js, take a look at the following resources:
+- **Own your content and infrastructure**
+- **Avoid vendor lock-in**
+- **Start free, scale when needed**
+- **Customize everything**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠 Requirements
 
-## Database Setup
+To self-host IndiePubStack, you'll need:
 
-This project uses Drizzle ORM with PostgreSQL. The database schema is defined in `src/lib/drizzle.ts`.
+- ✅ A custom domain
+- ✅ [Kinde](https://kinde.com) account (for authentication)
+- ✅ [Resend](https://resend.com) account (for email delivery)
+- ✅ A VPS or self-hosting provider (e.g. [Hetzner](https://hetzner.com), [DigitalOcean](https://digitalocean.com))
+- ✅ A PostgreSQL database
+- ✅ [Coolify](https://coolify.io) (optional, for easy deployment)
 
-### Generating Migrations
+---
 
-After making changes to the database schema, you need to generate migrations:
+## 🚀 Getting Started
 
-```bash
-# Generate migrations
-npx drizzle-kit generate
+The easiest way to deploy IndiePubStack is using **Docker**. A prebuilt Docker image is available, and deployment can be automated via tools like [Coolify](https://coolify.io).
 
-# Apply migrations
-npx drizzle-kit push
-```
+> **TODO:** Add complete Docker deployment instructions, including Coolify setup.
 
-### Kinde Users Table
+---
 
-A new table `kinde_users` has been added to store user data from Kinde authentication service. This table stores:
-- User ID from Kinde
-- Email
-- First name
-- Last name
+## 📦 Planned Hosting Options
 
-The webhook implementation in `src/app/api/kinde-webhook/route.ts` handles user creation and updates from Kinde.
+In addition to traditional VPS hosting, we're working on support for **serverless deployments** using platforms like:
 
-## Docker Setup
+- [Vercel](https://vercel.com) + [Neon](https://neon.tech) (PostgreSQL)
+- Fly.io, Railway, and others
 
-This project includes Docker configuration for easy development and deployment.
+Stay tuned for updates!
 
-### Using Docker Compose
+---
 
-The easiest way to run the application with all its dependencies:
+## 💡 Free Tier Details
 
-```bash
-# Build and start all services
-docker-compose up -d
+You can get started for free using the generous tiers from our recommended services:
 
-# View logs
-docker-compose logs -f
-```
+| Service | Free Tier |
+|--------|-----------|
+| **Kinde** | 10,500 monthly active users [(pricing)](https://kinde.com/pricing) |
+| **Resend** | 1,000 contacts/month, unlimited emails [(pricing)](https://resend.com/pricing) |
 
-This will start both the Next.js application and a PostgreSQL database.
+---
 
-### Using Docker Directly
+## 🧰 Configuration Guides
 
-You can also build and run just the Next.js application:
+Coming soon:
 
-```bash
-# Build the Docker image
-docker build -t indiepubstack .
+- Setting up authentication with **Kinde**
+- Setting up email delivery and webhooks with **Resend**
+- Custom domain configuration
 
-# Run the container
-docker run -p 3000:3000 indiepubstack
-```
+> **TODO:** Write step-by-step guides for Kinde + Resend setup and webhooks.
 
-Note: When running with Docker directly, you'll need to provide environment variables for database connection and other services.
+---
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! If you'd like to add features, improve docs, or fix bugs, feel free to open an issue or submit a PR.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📜 License
+
+MIT License. See [LICENSE](./LICENSE) for more information.
+
+---
+
+## ❤️ Support the Project
+
+If you like IndiePubStack, give it a ⭐ on GitHub and share it with fellow developers!
