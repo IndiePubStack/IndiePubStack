@@ -6,7 +6,7 @@
 
 ## ✨ Features
 
-- ✍️ Developer-first blogging experience
+- ✍️ Developer-first blogging experience with Markdown
 - 📬 Built-in newsletter delivery
 - 💸 Subscription monetization support (coming soon)
 - 🔒 Secure authentication via [Kinde](https://kinde.com)
