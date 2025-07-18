@@ -15,9 +15,8 @@ import {
 } from '@react-email/components';
 import type { TailwindConfig } from "@react-email/tailwind";
 import type {Resend} from "resend";
-import {Post} from "@/lib/drizzle";
+import {Post} from "@/lib/schema";
 import {getSettings} from "@/lib/settings";
-import {getResendClient} from "@/lib/resend";
 
 const tailwindConfig: TailwindConfig = {
     theme: {
@@ -78,7 +77,7 @@ const tailwindConfig: TailwindConfig = {
 
 export function broadcastEmail(resend: Resend, post: Post) {
     const settings = getSettings();
-    return getResendClient().broadcasts.create({
+    return resend.broadcasts.create({
         name: "/" + post.id + "/" + post.title!,
         audienceId: settings.resendAudienceId!,
         previewText: post.subTitle || post.title!,

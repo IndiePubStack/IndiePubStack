@@ -3,7 +3,8 @@ import React, {cache} from "react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {formatDate} from "@/lib/utils";
-import {db, postsTable} from "@/lib/drizzle";
+import {postsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {eq} from "drizzle-orm";
 import {Footer} from "@/app/footer";
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
@@ -23,7 +24,7 @@ function SubscribeForm() {
 }
 
 const getPostById = cache(async (postId: string) => {
-    const [post] = await db.select().from(postsTable).where(eq(postsTable.id, parseInt(postId)));
+    const [post] = await getDb().select().from(postsTable).where(eq(postsTable.id, parseInt(postId)));
     return post;
 })
 

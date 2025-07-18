@@ -1,9 +1,9 @@
 import {NextRequest, NextResponse} from "next/server";
 import jwksClient, {JwksClient} from "jwks-rsa";
 import jwt from "jsonwebtoken";
-import { db, kindeUsersTable } from "@/lib/drizzle";
+import { kindeUsersTable } from "@/lib/schema";
 import {createContact} from "@/lib/resend";
-
+import {getDb} from "@/lib/db";
 
 let client: JwksClient | null = null;
 
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 
 async function upsertKindeUser(kindeId: string, email: string, firstName?: string, lastName?: string) {
     try {
-        const [kindeUser] = await db
+        const [kindeUser] = await getDb()
             .insert(kindeUsersTable)
             .values({
                 kindeId,
@@ -83,7 +83,6 @@ async function upsertKindeUser(kindeId: string, email: string, firstName?: strin
                 firstName: firstName || null,
                 lastName: lastName || null,
                 createdAt: new Date(),
-                updatedAt: new Date(),
             })
             .onConflictDoUpdate({
                 target: kindeUsersTable.kindeId,
@@ -91,7 +90,6 @@ async function upsertKindeUser(kindeId: string, email: string, firstName?: strin
                     email,
                     firstName: firstName || null,
                     lastName: lastName || null,
-                    updatedAt: new Date(),
                 }
             }).returning();
 

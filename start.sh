@@ -2,7 +2,8 @@
 set -e
 
 echo "Running database migrations..."
-npx drizzle-kit push --force
+npx drizzle-kit migrate
 
 echo "Starting application..."
-exec node /app/dist/index.js
+ls /app
+exec node /app/server.js

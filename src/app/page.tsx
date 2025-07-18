@@ -2,7 +2,8 @@ export const dynamic = 'force-dynamic';
 
 import React from "react";
 import Nav from "@/app/nav";
-import {db, Post, postsTable} from "@/lib/drizzle";
+import {Post, postsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {eq} from "drizzle-orm";
 import {formatDate} from "@/lib/utils";
 import {Metadata} from "next";
@@ -42,7 +43,7 @@ function PostListItem({post}: {post: Post}) {
 }
 
 export default async function Home() {
-    const posts = await db.select()
+    const posts = await getDb().select()
         .from(postsTable).where(eq(postsTable.status, "published"));
 
   return (

@@ -1,11 +1,12 @@
-import {db, resendContactsTable} from "@/lib/drizzle";
+import {resendContactsTable} from "@/lib/schema";
 import { desc} from "drizzle-orm";
 import z from "zod";
 import {getResendClient} from "@/lib/resend";
 import {getSettings} from "@/lib/settings";
+import { getDb } from "@/lib/db";
 
 export async function GET() {
-    const resendContacts = await db.select()
+    const resendContacts = await getDb().select()
         .from(resendContactsTable)
         .orderBy(desc(resendContactsTable.createdAt));
 
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
             return Response.json({ message: 'Failed to create contact'}, {status: 400})
         }
 
-        const [subscriber] = await db.insert(resendContactsTable)
+        const [subscriber] = await getDb().insert(resendContactsTable)
             .values({
                 email: body.email,
                 resendId: result.data.id,

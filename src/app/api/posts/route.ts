@@ -1,9 +1,10 @@
-import {db, postsTable} from "@/lib/drizzle";
+import {postsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {desc} from "drizzle-orm";
 import {z} from "zod";
 
 export async function GET() {
-    const posts = await db.select().from(postsTable).orderBy(desc(postsTable.createdAt));
+    const posts = await getDb().select().from(postsTable).orderBy(desc(postsTable.createdAt));
     return new Response(JSON.stringify(posts), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
     const bodyRaw = await request.json();
     try {
         const body = createPostBodySchema.parse(bodyRaw);
-        const [post] = await db.insert(postsTable).values({
+        const [post] = await getDb().insert(postsTable).values({
             title: body.title,
             subTitle: body.subTitle,
             content: body.content,

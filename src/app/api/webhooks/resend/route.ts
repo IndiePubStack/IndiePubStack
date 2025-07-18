@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import {db, resendContactsTable} from "@/lib/drizzle";
+import {resendContactsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {Webhook} from "svix";
 
 let webhook: Webhook | null = null;
@@ -75,7 +76,7 @@ async function upsertResendContact(
     lastName?: string
 ) {
     try {
-        const [contact] = await db
+        const [contact] = await getDb()
             .insert(resendContactsTable)
             .values({
                 resendId,
@@ -85,7 +86,6 @@ async function upsertResendContact(
                 lastName: lastName || null,
                 unsubscribed,
                 createdAt: new Date(),
-                updatedAt: new Date(),
             })
             .onConflictDoUpdate({
                 target: resendContactsTable.resendId,
@@ -95,7 +95,6 @@ async function upsertResendContact(
                     firstName: firstName || null,
                     lastName: lastName || null,
                     unsubscribed,
-                    updatedAt: new Date(),
                 }
             }).returning();
 

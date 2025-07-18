@@ -1,11 +1,12 @@
-import {db, postsTable} from "@/lib/drizzle";
+import { postsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {eq} from "drizzle-orm";
 import z from "zod";
 
 export async function GET(_request: Request,
                           { params }: { params: Promise<{ postId: string }> }) {
     const postId = parseInt((await params).postId);
-    const [post] = await db.select().from(postsTable).where(eq(postsTable.id, postId));
+    const [post] = await getDb().select().from(postsTable).where(eq(postsTable.id, postId));
     return new Response(JSON.stringify(post), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
@@ -24,11 +25,10 @@ export async function PUT(request: Request,
     const bodyRaw = await request.json();
     try {
         const body = updatePostBodySchema.parse(bodyRaw);
-        const [post] = await db.update(postsTable).set({
+        const [post] = await getDb().update(postsTable).set({
             title: body.title,
             subTitle: body.subTitle,
             content: body.content,
-            updatedAt: new Date(),
         }).where(eq(postsTable.id, postId)).returning()
 
         return Response.json(post);
@@ -42,6 +42,6 @@ export async function PUT(request: Request,
 export async function DELETE(_request: Request,
                              { params }: { params: Promise<{ postId: string }> }) {
     const postId = parseInt((await params).postId);
-    await db.delete(postsTable).where(eq(postsTable.id, postId)).returning();
+    await getDb().delete(postsTable).where(eq(postsTable.id, postId)).returning();
     return new Response(null, { status: 204 });
 }

@@ -1,4 +1,5 @@
-import {db, postsTable} from "@/lib/drizzle";
+import { postsTable} from "@/lib/schema";
+import { getDb } from "@/lib/db";
 import {eq} from "drizzle-orm";
 import {getResendClient} from "@/lib/resend";
 import {broadcastEmail} from "@/lib/email";
@@ -9,7 +10,7 @@ export async function POST(_request: Request,
     const resend = getResendClient();
     const postId = parseInt((await params).postId);
 
-    const [post] = await db.select().from(postsTable).where(eq(postsTable.id, postId));
+    const [post] = await getDb().select().from(postsTable).where(eq(postsTable.id, postId));
 
     const slug = slugify(post.title!, {
         lower: true,
@@ -22,7 +23,7 @@ export async function POST(_request: Request,
         throw new Error("broadcast is not created");
     }
 
-    const [updatedPost] = await db.update(postsTable).set({
+    const [updatedPost] = await getDb().update(postsTable).set({
         slug: slug,
         broadcastId: broadcast.data?.id,
         publishedAt: new Date(),
