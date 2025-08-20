@@ -33,6 +33,7 @@
     "jwks-rsa": "^3.2.0",
     "lucide-react": "^0.525.0",
     "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
     "md-to-react-email": "^5.0.5",
     "next": "15.3.5",
     "pg": "^8.16.3",

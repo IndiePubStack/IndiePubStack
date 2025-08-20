@@ -10,6 +10,7 @@ import {FooterPublic} from "@/app/footer";
 // import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
 import {md} from "@/lib/markdown";
+import TableOfContent from "@/app/posts/toc";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubscribeForm() {
@@ -50,7 +51,8 @@ export default async function Page({params}: {
     const post = await getPostById(postId)
 
     return (<div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
-            {/*<Nav></Nav>*/}
+
+            <TableOfContent/>
             <div className={'flex-grow'}>
                 <div className={"max-w-xl mx-4 mt-4 container md:mx-auto flex-grow "}>
 
@@ -74,7 +76,7 @@ export default async function Page({params}: {
 
                         {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
 
-                        <article className="prose mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 mx-auto">
+                        <article id="blog-content" className="prose mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 mx-auto">
                             <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
                         </article>
 
