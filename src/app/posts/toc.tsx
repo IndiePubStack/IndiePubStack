@@ -1,6 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
+import Link from "next/link";
 
 interface TocItem {
     id: string;
@@ -37,7 +38,7 @@ const TableOfContent: React.FC = () => {
                     <ul className="space-y-0">
                         {/* Home link */}
                         <li className="toc-link pb-10">
-                            <a
+                            <Link
                                 href="/"
                                 className="text-text-secondary block py-1 font-medium opacity-50 transition-colors transition-opacity duration-200 ease-out hover:opacity-100"
                                 style={{ fontSize: "0.75rem", lineHeight: "1.4" }}
@@ -62,7 +63,7 @@ const TableOfContent: React.FC = () => {
                   </svg>
                   Home
                 </span>
-                            </a>
+                            </Link>
                         </li>
 
                         {/* Dynamic TOC */}
