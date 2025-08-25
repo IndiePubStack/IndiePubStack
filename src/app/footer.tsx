@@ -10,10 +10,12 @@ export function Footer() {
 
 export function FooterPublic() {
     return (
-        <nav className="flex justify-center container mx-auto px-10 py-5 items-center border-gray-200 font-mono">
-            <p className={"block font-mono text-sm text-gray-500 text-center"}>
+        <nav className="prose  flex justify-between container py-2.5 items-center border-gray-200 font-mono border-t-1">
+            <div className={"block font-mono text-sm text-gray-500"}>
                  Powered by <a className={'underline hover:text-gray-700'}
-                          href={"https://indiepubstack.com"}>IndiePubStack</a> © 2025</p>
+                          href={"https://indiepubstack.com"}>IndiePubStack</a> </div>
+
+            <div className={"block font-mono text-sm text-gray-500"}>© 2025</div>
         </nav>
     );
 }

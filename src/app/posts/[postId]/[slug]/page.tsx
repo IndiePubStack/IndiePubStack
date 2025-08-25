@@ -58,9 +58,9 @@ export default async function Page({params}: {
 
                     <div className={'w-full'}>
                         <div className={'prose'}>
-                            <h1 className="mb-6 text-2xl prose">{post.title}</h1>
+                            <h1 className="mb-6 text-2xl prose ">{post.title}</h1>
                             {post.subTitle && (
-                                <p>{post.subTitle}</p>
+                                <div className={"prose prose-inline-code:bg-gray-100 prose-inline-code:rounded-sm prose-inline-code:font-normal"} dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
                             )}
                             <div className={'flex justify-between items-center border-t-1 border-b-1'}>
                                 <p className="text-gray-500 mb-3 text-sm">
@@ -76,15 +76,17 @@ export default async function Page({params}: {
 
                         {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
 
-                        <article id="blog-content" className="prose mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 mx-auto">
+                        <article id="blog-content" className="prose mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 prose-inline-code:bg-gray-100 prose-inline-code:rounded-sm prose-inline-code:font-normal">
                             <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
                         </article>
 
                         {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
+
+                        <FooterPublic/>
                     </div>
                 </div>
             </div>
-            <FooterPublic/>
+
         </div>
     )
 }
