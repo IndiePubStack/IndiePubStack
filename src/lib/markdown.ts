@@ -9,7 +9,8 @@ export const md = MarkdownIt();
 md.use(
     await Shiki({
         themes: {
-            light: getSettings().codeTheme || 'one-light'
+            light: getSettings().codeTheme || 'one-light',
+            dark: 'one-dark-pro',
         },
     }),
 );

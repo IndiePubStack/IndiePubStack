@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
-import {ModeToggle} from "@/app/posts/[postId]/toggle";
 
 interface TocItem {
     id: string;
