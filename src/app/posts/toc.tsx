@@ -2,6 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import {ModeToggle} from "@/app/posts/[postId]/toggle";
 
 interface TocItem {
     id: string;
@@ -32,7 +33,8 @@ const TableOfContent: React.FC = () => {
     }, []);
 
     return (
-        <aside className="fixed top-20 left-20 z-10 hidden lg:block">
+        <aside className="fixed top-20 left-20 z-10 hidden lg:block dark:text-white">
+
             <div className="w-[180px]">
                 <nav aria-label="Table of contents" className="text-text-secondary">
                     <ul className="space-y-0">

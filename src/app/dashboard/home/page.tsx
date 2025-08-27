@@ -4,7 +4,7 @@ import {PostDashboardListItem} from "@/app/dashboard/posts/post-list-item";
 import {Post} from "@/app/dashboard/types";
 import {useQuery} from "@tanstack/react-query";
 
-export default function Page() {
+const Page = () => {
 
     const { data: homeStats } = useQuery({
         queryKey: ['homeStats', 'posts', 'subscribers'],
@@ -54,3 +54,7 @@ export default function Page() {
         </>}
     </>)
 }
+
+Page.theme = 'light'
+
+export default Page;

@@ -11,6 +11,8 @@ import {FooterPublic} from "@/app/footer";
 import {getSettings} from "@/lib/settings";
 import {md} from "@/lib/markdown";
 import TableOfContent from "@/app/posts/toc";
+import {ThemeProvider} from "@/components/theme-provider";
+import {ModeToggle} from "@/app/posts/[postId]/toggle";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubscribeForm() {
@@ -50,43 +52,55 @@ export default async function Page({params}: {
     const {postId} = await params;
     const post = await getPostById(postId)
 
-    return (<div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
+    return (
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <div className={"dark:bg-stone-900"}>
+                <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
 
-            <TableOfContent/>
-            <div className={'flex-grow'}>
-                <div className={"max-w-xl mx-4 mt-4 container md:mx-auto flex-grow "}>
+                    <TableOfContent/>
+                    <div className={'flex-grow'}>
+                        <div className={"max-w-xl mx-4 mt-4 container md:mx-auto flex-grow "}>
 
-                    <div className={'w-full'}>
-                        <div className={'prose'}>
-                            <h1 className="mb-6 text-2xl prose ">{post.title}</h1>
-                            {post.subTitle && (
-                                <div className={"prose prose-inline-code:bg-gray-100 prose-inline-code:rounded-sm prose-inline-code:font-normal"} dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
-                            )}
-                            <div className={'flex justify-between items-center border-t-1 border-b-1'}>
-                                <p className="text-gray-500 mb-3 text-sm">
-                                    {formatDate(post.publishedAt || post.createdAt)}
-                                </p>
+                            <div className={'w-full'}>
+                                <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1\n' +
+                                    '                        prose-inline-code:py-0.5'}>
+                                    <h1 className="mb-6 text-2xl">{post.title}</h1>
+                                    {post.subTitle && (
+                                        <div className={"prose-inline-code:bg-gray-100 prose-inline-code:rounded-sm prose-inline-code:font-normal"} dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
+                                    )}
+                                    <div className={'flex justify-between items-center border-t-1 border-b-1'}>
+                                        <p className=" mb-3 text-sm">
+                                            {formatDate(post.publishedAt || post.createdAt)}
+                                        </p>
+                                        <ModeToggle/>
+                                    </div>
+
+                                    <article id="blog-content" className="mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 ">
+                                        <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
+                                    </article>
+                                </div>
+
+                                {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
+
+
+
+                                {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
+
+                                <FooterPublic/>
                             </div>
                         </div>
-
-                        <article className={"prose"}>
-                            {/*<h1 className="mb-6 text-3xl">{post.title}</h1>*/}
-
-                        </article>
-
-                        {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
-
-                        <article id="blog-content" className="prose mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 prose-inline-code:bg-gray-100 prose-inline-code:rounded-sm prose-inline-code:font-normal">
-                            <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
-                        </article>
-
-                        {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
-
-                        <FooterPublic/>
                     </div>
+
                 </div>
             </div>
+        </ThemeProvider>
 
-        </div>
+
+
     )
 }

@@ -43,7 +43,7 @@ const PostStatusPublished = () => {
 
 const PostStatusDraft = () => {
     return (<Badge variant="secondary"
-                   className="bg-zinc-200  font-mono">
+                   className="bg-zinc-200 dark:bg-zinc-700  font-mono">
         <LoaderCircle/>
         Draft
     </Badge>)

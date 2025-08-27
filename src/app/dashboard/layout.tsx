@@ -2,6 +2,7 @@ import Nav from "@/app/dashboard/nav";
 import Providers from "@/app/providers";
 import React from "react";
 import {Metadata} from "next";
+import {ThemeProvider} from "@/components/theme-provider";
 
 export const metadata: Metadata = {
     title: 'IndiePubStack | Dashboard',
@@ -27,7 +28,9 @@ export default function RootLayout({
           <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
               <Nav></Nav>
               <div className={'flex-grow'}>
-                  {children}
+                  <ThemeProvider attribute="class" forcedTheme="light" disableTransitionOnChange>
+                      {children}
+                  </ThemeProvider>
               </div>
               <Footer/>
           </div>
