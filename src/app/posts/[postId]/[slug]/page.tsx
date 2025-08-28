@@ -64,14 +64,13 @@ export default async function Page({params}: {
 
                     <TableOfContent/>
                     <div className={'flex-grow'}>
-                        <div className={"max-w-xl mx-4 mt-4 container md:mx-auto flex-grow "}>
+                        <div className={"max-w-xl mt-4 container md:mx-auto flex-grow "}>
 
                             <div className={'w-full'}>
-                                <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1\n' +
-                                    '                        prose-inline-code:py-0.5'}>
+                                <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1 prose-inline-code:py-0.5'}>
                                     <h1 className="mb-6 text-2xl">{post.title}</h1>
                                     {post.subTitle && (
-                                        <div className={"prose-inline-code:bg-gray-100 prose-inline-code:rounded-sm prose-inline-code:font-normal"} dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
+                                        <div dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
                                     )}
                                     <div className={'flex justify-between items-center border-t-1 border-b-1'}>
                                         <p className=" mb-3 text-sm">
@@ -80,7 +79,7 @@ export default async function Page({params}: {
                                         <ModeToggle/>
                                     </div>
 
-                                    <article id="blog-content" className="mt-5 mb-5 prose-pre:border prose-pre:border-gray-300 ">
+                                    <article id="blog-content" className="mt-5 mb-5">
                                         <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
                                     </article>
                                 </div>
@@ -99,8 +98,5 @@ export default async function Page({params}: {
                 </div>
             </div>
         </ThemeProvider>
-
-
-
     )
 }
