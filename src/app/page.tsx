@@ -19,21 +19,23 @@ function PostListItem({post}: {post: Post}) {
     return (
         <a
             href={`/posts/${post.id}/${post.slug}`}
-            className="block rounded-md border border-gray-300 p-4 shadow-sm sm:p-6 mb-4"
+            className="group block rounded-md border border-border  backdrop-blur p-5 sm:p-6 mb-4 transition-colors duration-200"
         >
             <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
-                <div className="mt-4 sm:mt-0">
-                    <h3 className="text-lg font-medium text-pretty text-gray-900">
+                <div className="mt-1.5 sm:mt-0">
+                    <h3 className="text-lg font-semibold text-pretty text-foreground tracking-tight group-hover:text-primary">
                         {post.title}
                     </h3>
 
-                    {post.subTitle && (<p className="mt-4 line-clamp-2 text-sm text-pretty text-gray-700">
-                        {post.subTitle}
-                    </p>)}
+                    {post.subTitle && (
+                        <p className="mt-3 line-clamp-2 text-sm text-pretty text-muted-foreground">
+                            {post.subTitle}
+                        </p>
+                    )}
                 </div>
             </div>
 
-            <div className="text-sm text-gray-500 mt-6 flex gap-4 lg:gap-6">
+            <div className="text-sm text-muted-foreground mt-5 flex gap-4 lg:gap-6">
                 {post.publishedAt && (
                     <div>
                         {formatDate(post.publishedAt)}
@@ -58,14 +60,14 @@ export default async function Home() {
           <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
               <Nav></Nav>
               <div className={'flex-grow'}>
-
-                  <section className={"pt-5 flex-grow max-w-4xl mx-auto"}>
+                  <section className={"pt-6 sm:pt-8 flex-grow max-w-4xl mx-auto"}>
                       {posts.map((post) => {
                           return <PostListItem key={post.id} post={post}/>;
                       })}
                   </section>
               </div>
           </div>
+
       </ThemeProvider>
 
   );

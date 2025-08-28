@@ -12,6 +12,10 @@ run = "docker compose -f docker-compose.yml logs -f"
 description = "Start Database With Docker"
 run = "docker compose -f docker-compose.yml up db"
 
+[tasks."docker:start:db:detached"]
+description = "start database in detached mode"
+run = "docker compose -f docker-compose.yml up db"
+
 [tasks."database:connect"]
 description = "Connect to PostgreSQL database (indie_pub_stack) using interactive psql client"
 run = "docker exec -it $(docker compose -f docker-compose.yml ps -q db) psql -U indie_pub_stack -d indie_pub_stack_db"

@@ -59,43 +59,41 @@ export default async function Page({params}: {
             enableSystem
             disableTransitionOnChange
         >
-            <div className={"dark:bg-stone-900"}>
-                <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
+            <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
 
-                    <TableOfContent/>
-                    <div className={'flex-grow'}>
-                        <div className={"max-w-xl mt-4 container md:mx-auto flex-grow "}>
+                <TableOfContent/>
+                <div className={'flex-grow'}>
+                    <div className={"max-w-xl mt-4 container md:mx-auto flex-grow "}>
 
-                            <div className={'w-full'}>
-                                <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1 prose-inline-code:py-0.5'}>
-                                    <h1 className="mb-6 text-2xl">{post.title}</h1>
-                                    {post.subTitle && (
-                                        <div dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
-                                    )}
-                                    <div className={'flex justify-between items-center border-t-1 border-b-1'}>
-                                        <p className=" mb-3 text-sm">
-                                            {formatDate(post.publishedAt || post.createdAt)}
-                                        </p>
-                                        <ModeToggle/>
-                                    </div>
-
-                                    <article id="blog-content" className="mt-5 mb-5">
-                                        <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
-                                    </article>
+                        <div className={'w-full'}>
+                            <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1 prose-inline-code:py-0.5'}>
+                                <h1 className="mb-6 text-2xl">{post.title}</h1>
+                                {post.subTitle && (
+                                    <div dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
+                                )}
+                                <div className={'flex justify-between items-center border-t-1 border-b-1'}>
+                                    <p className=" mb-3 text-sm">
+                                        {formatDate(post.publishedAt || post.createdAt)}
+                                    </p>
+                                    <ModeToggle/>
                                 </div>
 
-                                {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
-
-
-
-                                {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
-
-                                <FooterPublic/>
+                                <article id="blog-content" className="mt-5 mb-5">
+                                    <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
+                                </article>
                             </div>
+
+                            {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
+
+
+
+                            {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
+
+                            <FooterPublic/>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </ThemeProvider>
     )

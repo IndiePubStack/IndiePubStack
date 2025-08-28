@@ -4,6 +4,7 @@ import Link from "next/link";
 import {getKindeServerSession, LoginLink, LogoutLink, RegisterLink} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
 import {isAdmin} from "@/lib/utils";
+import {ModeToggle} from "@/app/posts/[postId]/toggle";
 
 export default async function Nav() {
     const {isAuthenticated, getRoles} = getKindeServerSession();
@@ -13,12 +14,15 @@ export default async function Nav() {
     const settings = getSettings();
 
     return (
-        <nav className="flex justify-between py-5 items-center font-mono border-b border-gray-200">
+        <nav className="flex justify-between py-5 items-center font-mono border-b cursor-pointer">
             <Link className="block text-3xl font-extrabold text-center" href="/">
                 {settings.publicationName}
             </Link>
 
             <div className={'flex items-center gap-2.5'}>
+
+                <ModeToggle/>
+
                 {isUserAuthenticated ? <>
 
                 {isAdmin(roles) && <Button className={'cursor-pointer'} size={'lg'} asChild>
