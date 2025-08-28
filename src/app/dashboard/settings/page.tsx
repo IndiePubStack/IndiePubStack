@@ -19,7 +19,8 @@ export default function Page() {
     const publicationName = settings?.publicationName || '';
     const resendDomain = settings?.resendDomain || '';
     const resendAudienceId = settings?.resendAudienceId || '';
-    const codeTheme = settings?.codeTheme || '';
+    const lightCodeTheme = settings?.lightCodeTheme
+    const darkCodeTheme = settings?.darkCodeTheme
 
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
@@ -48,14 +49,26 @@ export default function Page() {
             </div>
 
             <div className="grid w-full items-center gap-1.5">
-                <Label className={'font-mono'}>Code Theme</Label>
+                <Label className={'font-mono'}>Light Code Theme</Label>
                 <Input
-                    value={codeTheme}
+                    value={lightCodeTheme}
                     disabled={true}
                     className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>CODE_THEME</Badge> environment variable on the server side.
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>LIGHT_CODE_THEME</Badge> environment variable on the server side.
+                </p>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className={'font-mono'}>Dark Code Theme</Label>
+                <Input
+                    value={darkCodeTheme}
+                    disabled={true}
+                    className="bg-muted"
+                />
+                <p className="text-sm text-muted-foreground">
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>DARK_CODE_THEME</Badge> environment variable on the server side.
                 </p>
             </div>
 

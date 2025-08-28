@@ -9,8 +9,8 @@ export const md = MarkdownIt();
 md.use(
     await Shiki({
         themes: {
-            light: getSettings().codeTheme || 'one-light',
-            dark: 'one-dark-pro',
+            light: getSettings().lightCodeTheme,
+            dark: getSettings().darkCodeTheme,
         },
     }),
 );
@@ -22,7 +22,7 @@ md.use(anchor, {
     })},
     permalink: anchor.permalink.linkInsideHeader({
         symbol: "#",
-        placement: "before",
+        placement: "after"
     }),
     level: [1, 2, 3]
 });

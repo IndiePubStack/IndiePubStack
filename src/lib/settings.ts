@@ -4,6 +4,7 @@ export function getSettings() {
         publicationName: process.env.PUBLICATION_NAME || 'IndiePubStack',
         resendDomain: process.env.RESEND_DOMAIN,
         resendAudienceId: process.env.RESEND_AUDIENCE_ID,
-        codeTheme: process.env.CODE_THEME || 'one-dark-pro',
+        lightCodeTheme: process.env.LIGHT_CODE_THEME || 'catppuccin-latte',
+        darkCodeTheme: process.env.DARK_CODE_THEME || 'gruvbox-dark-soft',
     }
 }

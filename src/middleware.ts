@@ -18,7 +18,6 @@ export default withAuth(
                 }
             }
         }
-
     },
     {
         publicPaths: ["/", "/posts/", "/api/webhooks/kinde", '/api/webhooks/resend'],

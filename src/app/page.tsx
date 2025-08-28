@@ -1,3 +1,5 @@
+import {ThemeProvider} from "@/components/theme-provider";
+
 export const dynamic = 'force-dynamic';
 
 import React from "react";
@@ -47,16 +49,24 @@ export default async function Home() {
         .from(postsTable).where(eq(postsTable.status, "published"));
 
   return (
-      <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
-        <Nav></Nav>
-          <div className={'flex-grow'}>
+      <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+      >
+          <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
+              <Nav></Nav>
+              <div className={'flex-grow'}>
 
-              <section className={"pt-5 flex-grow max-w-4xl mx-auto"}>
-                  {posts.map((post) => {
-                      return <PostListItem key={post.id} post={post}/>;
-                  })}
-              </section>
+                  <section className={"pt-5 flex-grow max-w-4xl mx-auto"}>
+                      {posts.map((post) => {
+                          return <PostListItem key={post.id} post={post}/>;
+                      })}
+                  </section>
+              </div>
           </div>
-      </div>
+      </ThemeProvider>
+
   );
 }
