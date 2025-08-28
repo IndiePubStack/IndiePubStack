@@ -144,9 +144,6 @@ html.dark .shiki span {
     text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
-
-/* Custom prose styles */
-
 /* Custom prose styles */
 .prose .anchor {
     @apply absolute invisible no-underline;
@@ -233,7 +230,6 @@ html.dark .shiki span {
 
 .prose ol {
     @apply list-decimal pl-6;
-    /*@apply  text-neutral-800 dark:text-neutral-200;*/
 }
 
 .prose :where(code):not(:where([class~=not-prose],[class~=not-prose] *))::after,
@@ -242,7 +238,6 @@ html.dark .shiki span {
 }
 
 .prose > :first-child {
-    /* Override removing top margin, causing layout shift */
     margin-top: 1.25em !important;
     margin-bottom: 1.25em !important;
 }
