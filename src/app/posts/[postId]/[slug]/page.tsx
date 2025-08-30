@@ -15,14 +15,12 @@ import {ThemeProvider} from "@/components/theme-provider";
 import {ModeToggle} from "@/app/posts/[postId]/toggle";
 import { notFound } from 'next/navigation'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubscribeForm() {
-    return (<div className={'border border-gray-300 rounded mt-5 py-5 p-2.5 font-mono transition duration-300 ease-in-out transform hover:scale-105'}>
+    return (<div className={'not-prose border rounded mt-5 py-5 px-5'}>
         <p className={'text-center'}>Like what you’re reading? Don’t miss out — hit subscribe and stay in the loop!</p>
-
-        <div className="flex justify-center mt-5">
-            <Button asChild size={'lg'}>
-                <Link href={'/subscribe'}>Subscribe</Link>
+        <div className="not-prose flex justify-center mt-5">
+            <Button size={'lg'}>
+                <Link href={'/subscribe'} className={'no-underline'}>Subscribe</Link>
             </Button>
         </div>
     </div>)
@@ -82,23 +80,16 @@ export default async function Page({params}: {
                                     </p>
                                     <ModeToggle/>
                                 </div>
-
+                                {!isUserAuthenticated && <SubscribeForm/>}
                                 <article id="blog-content" className="mt-5 mb-5">
                                     <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
                                 </article>
+                                {!isUserAuthenticated && <SubscribeForm/>}
                             </div>
-
-                            {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
-
-
-
-                            {/*{!isUserAuthenticated && <SubscribeForm/>}*/}
-
                             <FooterPublic/>
                         </div>
                     </div>
                 </div>
-
             </div>
         </ThemeProvider>
     )

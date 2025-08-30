@@ -6,5 +6,6 @@ export function getSettings() {
         resendAudienceId: process.env.RESEND_AUDIENCE_ID,
         lightCodeTheme: process.env.LIGHT_CODE_THEME || 'catppuccin-latte',
         darkCodeTheme: process.env.DARK_CODE_THEME || 'gruvbox-dark-soft',
+        gaId: process.env.GA_ID,
     }
 }

@@ -163,6 +163,10 @@ html.dark .shiki span {
     @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
 }
 
+.not-prose a {
+    @apply no-underline;
+}
+
 .prose .anchor:after {
     @apply text-neutral-300 dark:text-neutral-700;
     content: '#';

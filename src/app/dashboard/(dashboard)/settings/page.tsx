@@ -21,6 +21,7 @@ export default function Page() {
     const resendAudienceId = settings?.resendAudienceId || '';
     const lightCodeTheme = settings?.lightCodeTheme
     const darkCodeTheme = settings?.darkCodeTheme
+    const gaId = settings?.gaId
 
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
@@ -105,6 +106,18 @@ export default function Page() {
                 />
                 <p className="text-sm text-muted-foreground">
                     This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>RESEND_AUDIENCE_ID</Badge> environment variable on the server side.
+                </p>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+                <Label className={'font-mono'}>Google Analytics Id</Label>
+                <Input
+                    value={gaId}
+                    disabled={true}
+                    className="bg-muted"
+                />
+                <p className="text-sm text-muted-foreground">
+                    This property is managed via the <Badge variant={'secondary'} className={'font-mono'}>GA_ID</Badge> environment variable on the server side.
                 </p>
             </div>
         </div>
