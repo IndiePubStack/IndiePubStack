@@ -7,12 +7,13 @@ import {postsTable} from "@/lib/schema";
 import { getDb } from "@/lib/db";
 import {eq} from "drizzle-orm";
 import {FooterPublic} from "@/app/footer";
-// import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
 import {md} from "@/lib/markdown";
 import TableOfContent from "@/app/posts/toc";
 import {ThemeProvider} from "@/components/theme-provider";
 import {ModeToggle} from "@/app/posts/[postId]/toggle";
+import { notFound } from 'next/navigation'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubscribeForm() {
@@ -46,11 +47,15 @@ export async function generateMetadata({params}: {
 export default async function Page({params}: {
     params: Promise<{ postId: string; slug: string }>;
 }) {
-    // const {isAuthenticated} = getKindeServerSession();
-    // const isUserAuthenticated = await isAuthenticated();
+    const {isAuthenticated} = getKindeServerSession();
+    const isUserAuthenticated = await isAuthenticated();
 
     const {postId} = await params;
     const post = await getPostById(postId)
+
+    if (post?.status != 'published' && !isUserAuthenticated) {
+        notFound()
+    }
 
     return (
         <ThemeProvider
