@@ -1,4 +1,3 @@
-
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -19,7 +18,6 @@ export default function Nav() {
         </nav>
     );
 }
-
 
 export function NavigationMenuDemo() {
     return (

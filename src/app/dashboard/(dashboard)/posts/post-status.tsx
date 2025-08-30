@@ -1,7 +1,7 @@
 "use client"
 import {Badge} from "@/components/ui/badge";
 import {AlarmClock, CircleCheck, EyeOff, LoaderCircle} from "lucide-react";
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 
 export default function PostStatus({post}: {post: Post}) {
     switch (post.status) {

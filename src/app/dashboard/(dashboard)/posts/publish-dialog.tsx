@@ -3,7 +3,7 @@ import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 
 export function PublishDialog({ post, variant }: { post: Post, variant?: 'default' | 'secondary' | 'outline' }) {
     const queryClient = useQueryClient();

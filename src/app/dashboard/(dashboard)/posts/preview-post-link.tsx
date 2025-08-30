@@ -2,7 +2,7 @@
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 import {Button} from "@/components/ui/button";
 import {MoveUpRight} from "lucide-react";
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 
 export function PreviewPostLink({post}: {post: Post}) {
     return (

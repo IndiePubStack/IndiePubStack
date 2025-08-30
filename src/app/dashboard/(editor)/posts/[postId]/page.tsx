@@ -1,5 +1,5 @@
 "use client"
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {useCallback, useEffect, useRef, useState} from "react";
 import z from "zod";
@@ -7,12 +7,12 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ArrowLeft, Loader2Icon} from "lucide-react";
+import {ArrowLeft} from "lucide-react";
 import {Form, FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
 import {AutosizeTextarea} from "@/components/ui/autoresize-textarea";
 import {useParams} from "next/navigation";
-import {PreviewPostLink} from "@/app/dashboard/posts/preview-post-link";
-import {PublishDialog} from "@/app/dashboard/posts/publish-dialog";
+import {PreviewPostLink} from "@/app/dashboard/(dashboard)/posts/preview-post-link";
+import {PublishDialog} from "@/app/dashboard/(dashboard)/posts/publish-dialog";
 import { useDebouncedCallback } from "use-debounce";
 
 function PostEditor({post}: { post?: Post }) {
@@ -38,7 +38,6 @@ function PostEditor({post}: { post?: Post }) {
         }
     });
 
-    // Reset form when post data changes
     useEffect(() => {
         if (post) {
             const initialValues = {
@@ -54,7 +53,6 @@ function PostEditor({post}: { post?: Post }) {
     const savePost = useCallback(async (postData: PostFormValues) => {
         if (!post?.id) return Promise.reject('No post ID');
 
-        // Cancel in-flight request
         if (controllerRef.current) controllerRef.current.abort();
         controllerRef.current = new AbortController();
 
@@ -114,7 +112,7 @@ function PostEditor({post}: { post?: Post }) {
 
     return (
         <div>
-            <div className="flex justify-between items-center mt-10">
+            <div className="sticky top-0 z-40 flex justify-between items-center py-5 bg-white">
                 <div className="flex items-center gap-2.5">
                     <Button variant={'secondary'} size={'icon'}>
                         <Link href="/dashboard/posts">
@@ -122,13 +120,9 @@ function PostEditor({post}: { post?: Post }) {
                         </Link>
                     </Button>
 
-                    <Button className={'font-mono'} variant={'secondary'} disabled={!isSaving}>
-                        {isSaving ? (
-                            <>
-                                <Loader2Icon className="animate-spin mr-2"/>
-                                Saving changes...
-                            </>
-                        ) : <> <span className={'inline-block w-2 h-2 bg-green-600 rounded-full'}/> Saved</>}
+                    <Button className={'text-sm text-muted-foreground'} variant={'ghost'} disabled>
+                        <span className={'inline-block w-2 h-2 bg-green-600 rounded-full'}/>
+                        {isSaving ? "Saving changes..." :  "Draft Saved"}
                     </Button>
                 </div>
 
@@ -138,60 +132,64 @@ function PostEditor({post}: { post?: Post }) {
                 </div>
             </div>
 
-            <Form {...form}>
-                <div className="mx-auto py-6 space-y-6 font-serif text-black">
-                    <FormField
-                        control={form.control}
-                        name="title"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormControl>
-                                    <input
-                                        {...field}
-                                        placeholder="Title"
-                                        className="w-full text-4xl font-bold outline-none border-none focus:ring-0"
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+            <div className={'max-w-4xl mx-auto'}>
+                <Form {...form}>
+                    <div className="mx-auto py-6 space-y-6 font-serif text-black">
+                        <FormField
+                            control={form.control}
+                            name="title"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <input
+                                            {...field}
+                                            placeholder="Title"
+                                            className="w-full text-2xl font-bold outline-none border-none focus:ring-0"
+                                        />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="subTitle"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormControl>
-                                    <input
-                                        {...field}
-                                        placeholder="Add a subtitle"
-                                        className="w-full text-xl outline-none border-none focus:ring-0"
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="subTitle"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <input
+                                            {...field}
+                                            placeholder="Add a subtitle"
+                                            className="w-full text-xl outline-none border-none focus:ring-0 text-muted-foreground text-normal"
+                                        />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="content"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormControl>
-                                    <AutosizeTextarea
-                                        {...field}
-                                        className="w-full text-xl outline-none border-none resize-none focus:ring-0 focus-visible:ring-0 p-0"
-                                        placeholder="Start writing with markdown"
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
-                </div>
-            </Form>
+                        <FormField
+                            control={form.control}
+                            name="content"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <AutosizeTextarea
+                                            {...field}
+                                            className="w-full text-xl outline-none border-none resize-none focus:ring-0 focus-visible:ring-0 p-0 rounded-none text-normal"
+                                            placeholder="Start writing with markdown"
+                                        />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                </Form>
+            </div>
+
+
         </div>
     )
 }

@@ -21,7 +21,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import {Button, buttonVariants} from "@/components/ui/button";
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 import Link from "next/link";
 
 export default function PostActionsDropdown({post} : {post: Post}) {
