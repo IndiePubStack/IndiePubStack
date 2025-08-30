@@ -1,6 +1,6 @@
 "use client"
 import {Post} from "@/app/dashboard/types";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {useCallback, useEffect, useRef, useState} from "react";
 import z from "zod";
 import {useForm} from "react-hook-form";
@@ -19,12 +19,15 @@ function PostEditor({post}: { post?: Post }) {
     const [isSaving, setIsSaving] = useState(false);
     const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const lastSavedValuesRef = useRef<PostFormValues | null>(null);
+    const controllerRef = useRef<AbortController | null>(null);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        // cleanup on unmount
         return () => {
-            if (saveTimeoutRef.current) {
-                clearTimeout(saveTimeoutRef.current);
-            }
+            if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            if (controllerRef.current) controllerRef.current.abort();
         };
     }, []);
 
@@ -57,66 +60,72 @@ function PostEditor({post}: { post?: Post }) {
         }
     }, [post, form]);
 
-    const updatePostMutation = useMutation({
-        mutationFn: async (postData: PostFormValues) => {
-
-
-            if (!post?.id) return Promise.reject('No post ID');
-            setIsSaving(true);
-
-            return await fetch(`/api/posts/${post.id}`, {
+    // cancelable save
+    const savePost = useCallback(async (postData: PostFormValues) => {
+        if (!post?.id) return Promise.reject('No post ID');
+        // cancel in-flight
+        if (controllerRef.current) controllerRef.current.abort();
+        controllerRef.current = new AbortController();
+        setIsSaving(true);
+        try {
+            const res = await fetch(`/api/posts/${post.id}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(postData),
-            }).then(res => {
-                if (!res.ok) {
-                    throw new Error('Failed to update post');
-                }
-                return res.json();
-            }).finally(() => {
-                setTimeout(() => {
-                    setIsSaving(false);
-                }, 1000);
+                signal: controllerRef.current.signal,
             });
-        },
-        onSuccess: async (_, variables) => {
-            lastSavedValuesRef.current = {...variables};
-            await queryClient.invalidateQueries({queryKey: ['posts']});
-            await queryClient.invalidateQueries({queryKey: ['post', post?.id]});
-        },
-    });
+            if (!res.ok) throw new Error('Failed to update post');
+            const json = await res.json();
+            lastSavedValuesRef.current = { ...postData };
+            await queryClient.invalidateQueries({ queryKey: ['posts'] });
+            await queryClient.invalidateQueries({ queryKey: ['post', post?.id] });
+            return json;
+        } finally {
+            // brief delay so UI shows saving state
+            setTimeout(() => setIsSaving(false), 300);
+        }
+    }, [post?.id, queryClient]);
 
+
+    // debounced autosave on user input
     const autoSave = useCallback((data: PostFormValues) => {
         if (saveTimeoutRef.current) {
             clearTimeout(saveTimeoutRef.current);
         }
-
-        const timeout = setTimeout(() => {
-            updatePostMutation.mutate(data);
-        }, 1000);
-
-        saveTimeoutRef.current = timeout;
-    }, [updatePostMutation]);
+        saveTimeoutRef.current = setTimeout(() => {
+            savePost(data);
+        }, 800);
+    }, [savePost]);
 
     const watchedValues = form.watch();
+    // Debounce-driven save on changes
     useEffect(() => {
-        if (post?.id && form.formState.isDirty) {
-            const lastValues = lastSavedValuesRef.current;
-            if (lastValues) {
-                const hasChanged = Object.keys(watchedValues).some(key =>
-                    watchedValues[key as keyof PostFormValues] !== lastValues[key as keyof PostFormValues]
-                );
-
-                if (hasChanged) {
-                    autoSave(watchedValues);
-                }
-            } else {
-                autoSave(watchedValues);
-            }
+        if (!post?.id) return;
+        if (!form.formState.isDirty) return;
+        const lastValues = lastSavedValuesRef.current;
+        const hasChanged = !lastValues || Object.keys(watchedValues).some(key =>
+            watchedValues[key as keyof PostFormValues] !== lastValues[key as keyof PostFormValues]
+        );
+        if (hasChanged) {
+            autoSave(watchedValues as PostFormValues);
         }
     }, [watchedValues, post?.id, form.formState.isDirty, autoSave]);
+
+    // Interval fallback: save every 30s if there are unsaved changes
+    useEffect(() => {
+        if (!post?.id) return;
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        intervalRef.current = setInterval(() => {
+            const current = form.getValues();
+            const last = lastSavedValuesRef.current;
+            if (JSON.stringify(current) !== JSON.stringify(last)) {
+                savePost(current as PostFormValues);
+            }
+        }, 30000);
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
+    }, [post?.id, form, savePost]);
 
     return (
         <div>
@@ -216,7 +225,7 @@ export default function Page() {
         },
     });
 
-    if (isPending) return <div className="max-w-4xl mx-auto px-4 h-full">Loading...</div>;
+    if (isPending) return;
 
     if (error) return <div className="max-w-4xl mx-auto px-4 h-full">An error has occurred: {error.message}</div>;
 

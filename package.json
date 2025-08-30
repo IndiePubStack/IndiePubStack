@@ -46,6 +46,7 @@
     "slugify": "^1.6.6",
     "svix": "^1.69.0",
     "tailwind-merge": "^3.3.1",
+    "use-debounce": "^10.0.5",
     "zod": "^4.0.5"
   },
   "devDependencies": {
