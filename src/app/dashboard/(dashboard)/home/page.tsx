@@ -1,11 +1,10 @@
 "use client"
-import {NewPostButton} from "@/app/dashboard/posts/new-post-button";
-import {PostDashboardListItem} from "@/app/dashboard/posts/post-list-item";
-import {Post} from "@/app/dashboard/types";
+import {NewPostButton} from "@/app/dashboard/(dashboard)/posts/new-post-button";
+import {PostDashboardListItem} from "@/app/dashboard/(dashboard)/posts/post-list-item";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 import {useQuery} from "@tanstack/react-query";
 
 const Page = () => {
-
     const { data: homeStats } = useQuery({
         queryKey: ['homeStats', 'posts', 'subscribers'],
         queryFn: async () => {
@@ -18,12 +17,11 @@ const Page = () => {
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
             <h1 className={"text-2xl font-bold"}>Home</h1>
-
             <NewPostButton/>
         </div>
 
         {homeStats && <div
-            className={'rounded border border-gray-300 grid md:grid-cols-2 font-mono mt-10 divide-x-0 md:divide-x divide-y md:divide-y-0 divide-gray-300'}>
+            className={'rounded border grid md:grid-cols-2 font-mono mt-10 divide-x-0 md:divide-x divide-y md:divide-y-0'}>
             <div className={'p-2.5'}>
                 <h1 className={'mb-2.5'}>Published posts</h1>
                 <p className={'font-bold text-xl'}>{homeStats.totalPosts}</p>
@@ -54,7 +52,5 @@ const Page = () => {
         </>}
     </>)
 }
-
-Page.theme = 'light'
 
 export default Page;

@@ -1,8 +1,8 @@
 "use client"
-import {Post} from "@/app/dashboard/types";
-import {PostDashboardListItem} from "@/app/dashboard/posts/post-list-item";
+import {Post} from "@/app/dashboard/(dashboard)/types";
+import {PostDashboardListItem} from "@/app/dashboard/(dashboard)/posts/post-list-item";
 import {useQuery} from "@tanstack/react-query";
-import {NewPostButton} from "@/app/dashboard/posts/new-post-button";
+import {NewPostButton} from "@/app/dashboard/(dashboard)/posts/new-post-button";
 
 
 export default function Page() {
@@ -27,7 +27,6 @@ export default function Page() {
     return (<>
         <div className={"flex justify-between items-center font-mono mt-10"}>
             <h1 className={"text-2xl font-bold"}>Posts</h1>
-
             <NewPostButton/>
         </div>
 

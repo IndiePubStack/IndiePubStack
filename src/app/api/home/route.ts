@@ -14,13 +14,13 @@ export async function GET() {
         .from(postsTable)
         .where(eq(postsTable.status, "published"))
         .orderBy(desc(postsTable.publishedAt))
-        .limit(3);
+        .limit(5);
 
     const recentDraftPosts = await getDb().select()
         .from(postsTable)
         .where(eq(postsTable.status, "draft"))
         .orderBy(desc(postsTable.createdAt))
-        .limit(1);
+        .limit(3);
 
     return new Response(JSON.stringify({
         totalSubscribers,

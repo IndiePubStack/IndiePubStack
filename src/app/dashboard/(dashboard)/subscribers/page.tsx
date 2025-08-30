@@ -8,8 +8,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import {useQuery} from "@tanstack/react-query";
-import {AddSubscriberDialog} from "@/app/dashboard/subscribers/add-subscriber-dialog";
-import {Subscriber} from "@/app/dashboard/types";
+import {AddSubscriberDialog} from "@/app/dashboard/(dashboard)/subscribers/add-subscriber-dialog";
+import {Subscriber} from "@/app/dashboard/(dashboard)/types";
 
 export default function Page() {
     const subscribersQuery = useQuery({

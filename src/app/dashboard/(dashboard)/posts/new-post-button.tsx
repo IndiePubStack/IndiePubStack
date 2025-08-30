@@ -1,6 +1,6 @@
 "use client"
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 import {Button} from "@/components/ui/button";
 import {useRouter} from "next/navigation";
 

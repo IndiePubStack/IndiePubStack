@@ -1,17 +1,17 @@
 "use client"
 import {Badge} from "@/components/ui/badge";
-import {Post} from "@/app/dashboard/types";
+import {Post} from "@/app/dashboard/(dashboard)/types";
 import Link from "next/link";
-import {PublishDialog} from "@/app/dashboard/posts/publish-dialog";
-import {PreviewPostLinkIcon} from "@/app/dashboard/posts/preview-post-link";
-import PostActionsDropdown from "@/app/dashboard/posts/post-actions-dropdown";
-import PostStatus from "@/app/dashboard/posts/post-status";
+import {PublishDialog} from "@/app/dashboard/(dashboard)/posts/publish-dialog";
+import {PreviewPostLinkIcon} from "@/app/dashboard/(dashboard)/posts/preview-post-link";
+import PostActionsDropdown from "@/app/dashboard/(dashboard)/posts/post-actions-dropdown";
+import PostStatus from "@/app/dashboard/(dashboard)/posts/post-status";
 import {formatDate} from "@/lib/utils";
 
 export function PostDashboardListItem({post}: {post: Post}) {
     return (
         <div
-            className="rounded-md border border-gray-300 p-4 sm:p-6 mb-4 flex justify-between items-center"
+            className="rounded-md border p-4 sm:p-6 mb-4 flex justify-between items-center"
         >
             <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="mt-4 sm:mt-0">
