@@ -13,23 +13,13 @@ import {AutosizeTextarea} from "@/components/ui/autoresize-textarea";
 import {useParams} from "next/navigation";
 import {PreviewPostLink} from "@/app/dashboard/posts/preview-post-link";
 import {PublishDialog} from "@/app/dashboard/posts/publish-dialog";
+import { useDebouncedCallback } from "use-debounce";
 
 function PostEditor({post}: { post?: Post }) {
     const queryClient = useQueryClient();
     const [isSaving, setIsSaving] = useState(false);
-    const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const lastSavedValuesRef = useRef<PostFormValues | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-    useEffect(() => {
-        // cleanup on unmount
-        return () => {
-            if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
-            if (intervalRef.current) clearInterval(intervalRef.current);
-            if (controllerRef.current) controllerRef.current.abort();
-        };
-    }, []);
 
     const postSchema = z.object({
         title: z.string().min(1, "Title is required"),
@@ -48,6 +38,7 @@ function PostEditor({post}: { post?: Post }) {
         }
     });
 
+    // Reset form when post data changes
     useEffect(() => {
         if (post) {
             const initialValues = {
@@ -60,12 +51,13 @@ function PostEditor({post}: { post?: Post }) {
         }
     }, [post, form]);
 
-    // cancelable save
     const savePost = useCallback(async (postData: PostFormValues) => {
         if (!post?.id) return Promise.reject('No post ID');
-        // cancel in-flight
+
+        // Cancel in-flight request
         if (controllerRef.current) controllerRef.current.abort();
         controllerRef.current = new AbortController();
+
         setIsSaving(true);
         try {
             const res = await fetch(`/api/posts/${post.id}`, {
@@ -74,58 +66,51 @@ function PostEditor({post}: { post?: Post }) {
                 body: JSON.stringify(postData),
                 signal: controllerRef.current.signal,
             });
+
             if (!res.ok) throw new Error('Failed to update post');
             const json = await res.json();
+
+            queryClient.setQueryData(['post', post.id], json);
+
             lastSavedValuesRef.current = { ...postData };
+
             await queryClient.invalidateQueries({ queryKey: ['posts'] });
-            await queryClient.invalidateQueries({ queryKey: ['post', post?.id] });
             return json;
         } finally {
-            // brief delay so UI shows saving state
             setTimeout(() => setIsSaving(false), 300);
         }
     }, [post?.id, queryClient]);
 
+    const debouncedSave = useDebouncedCallback(
+        async (data: PostFormValues) => {
+            await savePost(data);
+        },
+        800
+    );
 
-    // debounced autosave on user input
-    const autoSave = useCallback((data: PostFormValues) => {
-        if (saveTimeoutRef.current) {
-            clearTimeout(saveTimeoutRef.current);
-        }
-        saveTimeoutRef.current = setTimeout(() => {
-            savePost(data);
-        }, 800);
-    }, [savePost]);
+    const titleValue = form.watch('title');
+    const subTitleValue = form.watch('subTitle');
+    const contentValue = form.watch('content');
 
-    const watchedValues = form.watch();
-    // Debounce-driven save on changes
     useEffect(() => {
         if (!post?.id) return;
-        if (!form.formState.isDirty) return;
-        const lastValues = lastSavedValuesRef.current;
-        const hasChanged = !lastValues || Object.keys(watchedValues).some(key =>
-            watchedValues[key as keyof PostFormValues] !== lastValues[key as keyof PostFormValues]
-        );
-        if (hasChanged) {
-            autoSave(watchedValues as PostFormValues);
-        }
-    }, [watchedValues, post?.id, form.formState.isDirty, autoSave]);
 
-    // Interval fallback: save every 30s if there are unsaved changes
+        if (form.formState.isDirty) {
+            const currentValues = {
+                title: titleValue || '',
+                subTitle: subTitleValue || '',
+                content: contentValue || ''
+            };
+            debouncedSave(currentValues);
+        }
+    }, [titleValue, subTitleValue, contentValue, post?.id, form.formState.isDirty, debouncedSave]);
+
     useEffect(() => {
-        if (!post?.id) return;
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        intervalRef.current = setInterval(() => {
-            const current = form.getValues();
-            const last = lastSavedValuesRef.current;
-            if (JSON.stringify(current) !== JSON.stringify(last)) {
-                savePost(current as PostFormValues);
-            }
-        }, 30000);
         return () => {
-            if (intervalRef.current) clearInterval(intervalRef.current);
+            debouncedSave.cancel();
+            if (controllerRef.current) controllerRef.current.abort();
         };
-    }, [post?.id, form, savePost]);
+    }, [debouncedSave]);
 
     return (
         <div>
@@ -154,7 +139,7 @@ function PostEditor({post}: { post?: Post }) {
             </div>
 
             <Form {...form}>
-                <form className="mx-auto py-6 space-y-6 font-serif text-black">
+                <div className="mx-auto py-6 space-y-6 font-serif text-black">
                     <FormField
                         control={form.control}
                         name="title"
@@ -164,7 +149,7 @@ function PostEditor({post}: { post?: Post }) {
                                     <input
                                         {...field}
                                         placeholder="Title"
-                                        className="w-full text-4xl font-bold  outline-none border-none focus:ring-0"
+                                        className="w-full text-4xl font-bold outline-none border-none focus:ring-0"
                                     />
                                 </FormControl>
                                 <FormMessage/>
@@ -181,7 +166,7 @@ function PostEditor({post}: { post?: Post }) {
                                     <input
                                         {...field}
                                         placeholder="Add a subtitle"
-                                        className="w-full text-xl  outline-none border-none focus:ring-0"
+                                        className="w-full text-xl outline-none border-none focus:ring-0"
                                     />
                                 </FormControl>
                                 <FormMessage/>
@@ -205,7 +190,7 @@ function PostEditor({post}: { post?: Post }) {
                             </FormItem>
                         )}
                     />
-                </form>
+                </div>
             </Form>
         </div>
     )
