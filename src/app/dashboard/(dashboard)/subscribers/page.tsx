@@ -10,6 +10,7 @@ import {
 import {useQuery} from "@tanstack/react-query";
 import {AddSubscriberDialog} from "@/app/dashboard/(dashboard)/subscribers/add-subscriber-dialog";
 import {Subscriber} from "@/app/dashboard/(dashboard)/types";
+import SubscriberActionsDropdown from "@/app/dashboard/(dashboard)/subscribers/subscriber-actions-dropdown";
 
 export default function Page() {
     const subscribersQuery = useQuery({
@@ -40,6 +41,7 @@ export default function Page() {
                     <TableHead>ID</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>Created At</TableHead>
+                    <TableHead className={'w-0'}></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -48,6 +50,9 @@ export default function Page() {
                         <TableCell >{subscriber.id}</TableCell>
                         <TableCell>{subscriber.email}</TableCell>
                         <TableCell>{subscriber.createdAt}</TableCell>
+                        <TableCell className={'text-right'}>
+                            <SubscriberActionsDropdown subscriber={subscriber} />
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
