@@ -4,6 +4,7 @@ import "./globals.css";
 import {GoogleAnalytics} from "@next/third-parties/google";
 import {getSettings} from "@/lib/settings";
 import React from "react";
+import {ThemeProvider} from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen dark:bg-stone-900`}
       >
-      {children}
+      <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+      >
+          {children}
+      </ThemeProvider>
       </body>
       {getSettings().gaId && <GoogleAnalytics gaId={getSettings().gaId!} />}
     </html>

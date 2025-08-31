@@ -68,7 +68,7 @@ function PostEditor({post}: { post?: Post }) {
             if (!res.ok) throw new Error('Failed to update post');
             const json = await res.json();
 
-            queryClient.setQueryData(['post', post.id], json);
+            // queryClient.setQueryData(['post', post.id], json);
 
             lastSavedValuesRef.current = { ...postData };
 
@@ -112,7 +112,7 @@ function PostEditor({post}: { post?: Post }) {
 
     return (
         <div>
-            <div className="sticky top-0 z-40 flex justify-between items-center py-5 bg-white">
+            <div className="sticky top-0 z-40 flex justify-between items-center py-5 bg-white dark:bg-stone-900">
                 <div className="flex items-center gap-2.5">
                     <Button variant={'secondary'} size={'icon'}>
                         <Link href="/dashboard/posts">
@@ -120,7 +120,7 @@ function PostEditor({post}: { post?: Post }) {
                         </Link>
                     </Button>
 
-                    <Button className={'text-sm text-muted-foreground'} variant={'ghost'} disabled>
+                    <Button className={'text-sm text-muted-foreground'} variant={'ghost'} disabled={true}>
                         <span className={'inline-block w-2 h-2 bg-green-600 rounded-full'}/>
                         {isSaving ? "Saving changes..." :  "Draft Saved"}
                     </Button>
@@ -134,7 +134,7 @@ function PostEditor({post}: { post?: Post }) {
 
             <div className={'max-w-4xl mx-auto'}>
                 <Form {...form}>
-                    <div className="mx-auto py-6 space-y-6 font-serif text-black">
+                    <div className="mx-auto py-6 space-y-6">
                         <FormField
                             control={form.control}
                             name="title"
@@ -144,7 +144,7 @@ function PostEditor({post}: { post?: Post }) {
                                         <input
                                             {...field}
                                             placeholder="Title"
-                                            className="w-full text-2xl font-bold outline-none border-none focus:ring-0"
+                                            className="w-full text-4xl font-bold outline-none border-none focus:ring-0"
                                         />
                                     </FormControl>
                                     <FormMessage/>
@@ -177,7 +177,7 @@ function PostEditor({post}: { post?: Post }) {
                                     <FormControl>
                                         <AutosizeTextarea
                                             {...field}
-                                            className="w-full text-xl outline-none border-none resize-none focus:ring-0 focus-visible:ring-0 p-0 rounded-none text-normal"
+                                            className="w-full text-xl outline-none border-none dark:border-none resize-none focus:ring-0 focus-visible:ring-0 p-0 rounded-none text-normal bg-white dark:bg-stone-900 dark:focus:ring-0 dark:focus-visible:ring-0 ring-offset-0 focus-visible:ring-offset-0"
                                             placeholder="Start writing with markdown"
                                         />
                                     </FormControl>
