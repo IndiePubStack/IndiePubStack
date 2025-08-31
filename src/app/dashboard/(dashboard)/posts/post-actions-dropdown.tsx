@@ -59,6 +59,7 @@ export default function PostActionsDropdown({post} : {post: Post}) {
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ['posts']});
+            await queryClient.invalidateQueries({queryKey: ['homeStats']});
         },
     });
 

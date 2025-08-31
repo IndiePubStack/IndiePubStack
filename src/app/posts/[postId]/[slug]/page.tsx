@@ -11,8 +11,7 @@ import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
 import {md} from "@/lib/markdown";
 import TableOfContent from "@/app/posts/toc";
-import {ThemeProvider} from "@/components/theme-provider";
-import {ModeToggle} from "@/app/posts/[postId]/toggle";
+import {ModeToggle} from "@/components/theme-provider";
 import { notFound } from 'next/navigation'
 
 function SubscribeForm() {
@@ -56,41 +55,34 @@ export default async function Page({params}: {
     }
 
     return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
+        <div className={'antialiased max-w-4xl mx-auto px-4 h-full flex flex-col'}>
 
-                <TableOfContent/>
-                <div className={'flex-grow'}>
-                    <div className={"max-w-xl mt-4 container md:mx-auto flex-grow "}>
+            <TableOfContent/>
+            <div className={'flex-grow'}>
+                <div className={"max-w-xl mt-4 container md:mx-auto flex-grow "}>
 
-                        <div className={'w-full'}>
-                            <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1 prose-inline-code:py-0.5'}>
-                                <h1 className="mb-6 text-2xl">{post.title}</h1>
-                                {post.subTitle && (
-                                    <div dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
-                                )}
-                                <div className={'flex justify-between items-center border-t-1 border-b-1'}>
-                                    <p className=" mb-3 text-sm">
-                                        {formatDate(post.publishedAt || post.createdAt)}
-                                    </p>
-                                    <ModeToggle/>
-                                </div>
-                                {!isUserAuthenticated && <SubscribeForm/>}
-                                <article id="blog-content" className="mt-5 mb-5">
-                                    <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
-                                </article>
-                                {!isUserAuthenticated && <SubscribeForm/>}
+                    <div className={'w-full'}>
+                        <div className={'prose prose-stone dark:prose-invert prose-inline-code:bg-gray-100 dark:prose-inline-code:bg-stone-600 prose-inline-code:rounded-sm prose-inline-code:font-normal prose-inline-code:px-1 prose-inline-code:py-0.5'}>
+                            <h1 className="mb-6 text-2xl">{post.title}</h1>
+                            {post.subTitle && (
+                                <div dangerouslySetInnerHTML={{__html: md.render(post.subTitle!)}}/>
+                            )}
+                            <div className={'flex justify-between items-center border-t-1 border-b-1'}>
+                                <p className=" mb-3 text-sm">
+                                    {formatDate(post.publishedAt || post.createdAt)}
+                                </p>
+                                <ModeToggle/>
                             </div>
-                            <FooterPublic/>
+                            {!isUserAuthenticated && <SubscribeForm/>}
+                            <article id="blog-content" className="mt-5 mb-5">
+                                <div dangerouslySetInnerHTML={{__html: md.render(post.content!)}}/>
+                            </article>
+                            {!isUserAuthenticated && <SubscribeForm/>}
                         </div>
+                        <FooterPublic/>
                     </div>
                 </div>
             </div>
-        </ThemeProvider>
+        </div>
     )
 }

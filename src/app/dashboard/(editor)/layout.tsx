@@ -1,7 +1,6 @@
 import Providers from "@/app/providers";
 import React from "react";
 import {Metadata} from "next";
-import {ThemeProvider} from "@/components/theme-provider";
 
 export const metadata: Metadata = {
     title: 'IndiePubStack | Dashboard',
@@ -16,9 +15,7 @@ export default function RootLayout({
       <Providers>
           <div className={`antialiased  px-4 h-full flex flex-col`}>
               <div className={'flex-grow'}>
-                  <ThemeProvider attribute="class" forcedTheme="light" disableTransitionOnChange>
-                      {children}
-                  </ThemeProvider>
+                  {children}
               </div>
           </div>
       </Providers>

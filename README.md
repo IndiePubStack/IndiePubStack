@@ -69,9 +69,10 @@ To self-host IndiePubStack, you'll need:
 - ✅ [Coolify](https://coolify.io) (optional, for easy deployment)
 - ✅ Node.js 18+ (for local development)
 
-### Architecture Diagram
+[//]: # (### Architecture Diagram)
 
-![Architecture Diagram](img/indiepubstackdesign.png)
+[//]: # ()
+[//]: # (![Architecture Diagram]&#40;img/indiepubstackdesign.png&#41;)
 
 ## 💻 Technology Stack
 

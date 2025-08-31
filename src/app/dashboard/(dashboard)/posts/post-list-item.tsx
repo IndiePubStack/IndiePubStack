@@ -16,17 +16,17 @@ export function PostDashboardListItem({post}: {post: Post}) {
             <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="mt-4 sm:mt-0">
                     {post.status == 'draft' ?
-                        <Link className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
+                        <Link className="text-lg font-medium text-pretty mb-2.5 hover:underline"
                               href={`/dashboard/posts/${post.id}`}>
                             {post.title || 'Untitled'}
                         </Link>
-                        :<a className="text-lg font-medium text-pretty text-gray-900 mb-2.5 hover:underline"
+                        :<a className="text-lg font-medium text-pretty mb-2.5 hover:underline"
                             href={`/posts/${post.id}/${post.slug}`}>
                             {post.title || 'Untitled'}
                         </a>
                     }
 
-                    {post.subTitle && <p className="mt-4 line-clamp-2 text-sm text-pretty text-gray-700">
+                    {post.subTitle && <p className="mt-4 line-clamp-2 text-sm text-pretty text-muted-foreground">
                         {post.subTitle}
                     </p>}
 

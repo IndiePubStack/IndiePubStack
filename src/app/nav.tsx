@@ -4,7 +4,7 @@ import Link from "next/link";
 import {getKindeServerSession, LoginLink, LogoutLink, RegisterLink} from "@kinde-oss/kinde-auth-nextjs/server";
 import {getSettings} from "@/lib/settings";
 import {isAdmin} from "@/lib/utils";
-import {ModeToggle} from "@/app/posts/[postId]/toggle";
+import {ModeToggle} from "@/components/theme-provider";
 
 export default async function Nav() {
     const {isAuthenticated, getRoles} = getKindeServerSession();

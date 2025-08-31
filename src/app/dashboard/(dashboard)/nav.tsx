@@ -6,10 +6,11 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link";
+import {ModeToggle} from "@/components/theme-provider";
 
 export default function Nav() {
     return (
-        <nav className="flex py-5 items-center font-mono justify-between border-b border-gray-200">
+        <nav className="flex py-5 items-center font-mono justify-between border-b">
             <Link className="block text-3xl font-extrabold text-center" href="/">
                 {/*{settings?.publicationName || 'IndiePubStack_'}*/}
                 {'IndiePubStack'}
@@ -42,6 +43,11 @@ export function NavigationMenuDemo() {
                     <NavigationMenuItem>
                         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                             <Link href="/dashboard/settings">Settings</Link>
+                        </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                            <ModeToggle/>
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
