@@ -19,6 +19,7 @@ Open-source, self-hosted publishing platform for technical creators. Own your co
     - [Environment Variables](#environment-variables)
     - [Service Setup](#service-setup)
 - [Tech Stack](#tech-stack)
+- [Examples](#examples)
 - [License](#license)
 
 ![Dashboard Demo](img/dashboard_demo.png)
@@ -126,6 +127,12 @@ CODE_THEME=github-dark
 - **Email**: Resend
 - **UI**: Tailwind CSS + shadcn/ui
 - **Content**: Markdown-it + Shiki
+
+
+## Examples
+
+Links to blogs powered by self-hosted IndiePubStack:
+- https://indiepubstack.andreyfadeev.com
 
 ## License
 
